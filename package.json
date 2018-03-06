@@ -1,0 +1,34 @@
+{
+  "name": "visualizer",
+  "version": "1.0.0",
+  "description": "A 3D music visualizer",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LtBackup/Visualizer.git"
+  },
+  "keywords": [
+    "music",
+    "visualizer",
+    "3D",
+    "three.js"
+  ],
+  "author": "Jim Pratt, Molly Moran, Matt Womack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LtBackup/Visualizer/issues"
+  },
+  "homepage": "https://github.com/LtBackup/Visualizer#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "path": "^0.12.7"
+  }
+}
