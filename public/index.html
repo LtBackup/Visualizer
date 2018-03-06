@@ -23,27 +23,27 @@
 
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
-                <form class="col-6">
+                <form class="col-6" method="post">
                     <h4>Create an Account</h4>
                     <p>
                         <a href="#">Already Have an Account? Click Here to Login.</a>
                     </p>
                     <div class="form-group">
-                        <label for="existingUsername">Username</label>
-                        <input type="text" class="form-control" id="existingUsername" placeholder="Create a username with no spaces." pattern=".{5,}" required title="5 characters minimum">
+                        <label for="newUsername">Username</label>
+                        <input type="text" class="form-control" id="newUsername" placeholder="Create a username with no spaces." pattern=".{5,}" required title="5 characters minimum">
                     </div>
                     <div class="form-group">
-                        <label for="existingPassword">Password</label>
-                        <input type="text" class="form-control" id="existingPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum">
+                        <label for="newPassword">Password</label>
+                        <input type="text" class="form-control" id="newPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submitNew">Submit</button>
                 </form>
             </div>
         </div>
         <br>
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
-                <form class="col-6">
+                <form class="col-6" method="post">
                     <h4>Welcome Back! Please Login.</h4>
                     <div class="form-group">
                         <label for="existingUsername">Username</label>
@@ -53,7 +53,7 @@
                         <label for="existingPassword">Password</label>
                         <input type="text" class="form-control" id="existingPassword" placeholder="Enter Your Password" pattern=".{5,}" required title="5 characters minimum">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submitExisting">Submit</button>
                 </form>
             </div>
         </div>
@@ -61,7 +61,6 @@
     </div>
 
     <!-- Optional JavaScript -->
-
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

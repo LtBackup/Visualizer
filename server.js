@@ -10,6 +10,9 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Requiring our models for syncing
+var db = require("./models");
+
 // Static directory
 app.use(express.static("app/public"));
 
@@ -17,7 +20,6 @@ app.use(express.static("app/public"));
 // =============================================================
 require("./app/routing/apiRoutes.js")(app);
 require("./app/routing/htmlRoutes.js")(app);
-require("./app/data/matches.js");
 
 // Listener
 // ===========================================================
