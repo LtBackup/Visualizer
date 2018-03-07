@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <title>Audio Visualizer</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-2" id="username">Username Will Go Here</div>
+        </div>
+
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+                <form class="col-6" method="post">
+                    <h4>Create an Account</h4>
+                    <p>
+                        <a href="#">Already Have an Account? Click Here to Login.</a>
+                    </p>
+                    <div class="form-group">
+                        <label for="newUsername">Username</label>
+                        <input type="text" class="form-control" id="newUsername" placeholder="Create a username with no spaces." pattern=".{5,}"
+                            required title="5 characters minimum">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password</label>
+                        <input type="text" class="form-control" id="newPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitNew">Submit</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+                <form class="col-6" method="post" id="existing">
+                    <h4>Welcome Back! Please Login.</h4>
+                    <div class="form-group">
+                        <label for="existingUsername">Username</label>
+                        <input type="text" class="form-control" id="existingUsername" placeholder="Enter Your Username" pattern=".{5,}" required
+                            title="5 characters minimum">
+                    </div>
+                    <div class="form-group">
+                        <label for="existingPassword">Password</label>
+                        <input type="password" class="form-control" id="existingPassword" placeholder="Enter Your Password" pattern=".{5,}" required
+                            title="5 characters minimum">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitExisting">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Optional JavaScript -->
+    <script>
+        $(document).ready(function () {
+            
+            var existingUsernameInput = $("#existingUsername");
+            var existingPasswordInput = $("#existingPassword");
+
+            $(existing).on('submit', submitExisting);
+
+            function submitExisting(event) {
+                event.preventDefault();
+                if (!existingUsernameInput.val().trim() || !existingPasswordInput.val().trim()) {
+                    return;
+                }
+                // Constructing a userData object to hand to the database
+                var loginInfo = {
+                    username: existingUsernameInput.val().trim(),
+                    password: existingPasswordInput.val().trim()
+                };
+                console.log(loginInfo);
+                return loginInfo;
+            }
+            $.get("/api/users", function(userData){
+                console.log(userData);
+            });
+            
+        });
+    </script>
+    <!-- audio testing script -->
+    <script>
+        window.onload = function() {
+            var ctx = new AudioContext();
+            var audio = new Audio("audio/pulse.mp3");
+            //var audio = document.getElementById('myAudio');
+            var audioSrc = ctx.createMediaElementSource(audio);
+            console.log(audioSrc);
+            var analyser = ctx.createAnalyser();
+            console.log(audio);
+            audio.load();
+
+            audio.play();
+
+            // we have to connect the MediaElementSource with the analyser 
+            audioSrc.connect(analyser);
+            // we could configure the analyser: e.g. analyser.fftSize (for further infos read the spec)
+           
+            // frequencyBinCount tells you how many values you'll receive from the analyser
+            var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+            console.log(frequencyData);
+           
+            // we're ready to receive some data!
+            // loop
+            // function renderFrame() {
+            //    requestAnimationFrame(renderFrame);
+            //    // update data in frequencyData
+            //    analyser.getByteFrequencyData(frequencyData);
+            //    // render frame based on values in frequencyData
+            //    // console.log(frequencyData)
+            // }
+            audio.play();
+            //renderFrame();
+          };
+        </script>
+</body>
+
+</html>
