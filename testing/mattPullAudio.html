@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+    var app = app || {};
+    var source;
+    var buffer;
+    var analyser;
+
+window.onload = function() {
+
+     app.init();
+    // console.log('audio loader connected');
+    window.addEventListener('drop', onDrop, false);
+    window.addEventListener('dragover', onDrag, false);
+    function onDrag(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $('#notification').velocity('fadeOut', { duration: 150 });
+        return false;
+    }
+    function onDrop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var droppedFiles = e.dataTransfer.files;
+        initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
+    }
+
+
+    function initiateAudio(data) {
+        if(app.audio){
+            app.audio.remove();
+            window.cancelAnimationFrame(app.animationFrame);
+        }
+        app.audio = document.createElement('audio'); // creates an html audio element
+        app.audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
+        app.audio.autoplay = true;
+        // app.audio.play();
+        app.play = true;
+        document.body.appendChild(app.audio);
+        app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
+        source = app.ctx.createMediaElementSource(app.audio); // creates audio source
+        analyser = app.ctx.createAnalyser(); // creates analyserNode
+        source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
+        source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
+        app.animate();
+    }
+    
+    // var ctx = new AudioContext();
+    // var audio = document.getElementById('myAudio');
+    // var audioSrc = ctx.createMediaElementSource(audio);
+    // var analyser = ctx.createAnalyser();
+    // we have to connect the MediaElementSource with the analyser 
+    // audioSrc.connect(analyser);
+    // we could configure the analyser: e.g. analyser.fftSize (for further infos read the spec)
+   
+    // frequencyBinCount tells you how many values you'll receive from the analyser
+    // var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+   
+    // we're ready to receive some data!
+    // loop
+    // function renderFrame() {
+    //    requestAnimationFrame(renderFrame);
+       // update data in frequencyData
+    //    analyser.getByteFrequencyData(frequencyData);
+       // render frame based on values in frequencyData
+       // console.log(frequencyData)
+    }
+//     audio.start();
+//     renderFrame();
+//   };
+</script>
+</html>
+
