@@ -105,13 +105,12 @@
         window.onload = function() {
             var ctx = new AudioContext();
             var audio = new Audio("audio/pulse.mp3");
+            audio.play();
             //var audio = document.getElementById('myAudio');
             var audioSrc = ctx.createMediaElementSource(audio);
             console.log(audioSrc);
             var analyser = ctx.createAnalyser();
             console.log(audio);
-            audio.load();
-
             audio.play();
 
             // we have to connect the MediaElementSource with the analyser 
