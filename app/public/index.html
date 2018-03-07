@@ -86,13 +86,17 @@
                     return;
                 }
                 // Constructing a userData object to hand to the database
-                var userData = {
+                var loginInfo = {
                     username: existingUsernameInput.val().trim(),
                     password: existingPasswordInput.val().trim()
                 };
-                console.log(userData);
-                return userData;
+                console.log(loginInfo);
+                return loginInfo;
             }
+            $.get("/api/users", function(userData){
+                console.log(userData);
+            });
+            
         });
     </script>
 </body>

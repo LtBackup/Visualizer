@@ -1,5 +1,5 @@
 // Requiring our models
-var db = require("../models");
+var db = require("../models/models.js");
 
 // Routes
 // =============================================================
