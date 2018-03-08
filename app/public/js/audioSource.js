@@ -41,7 +41,7 @@ window.onload = function () {
         // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
         //app.animate();
         console.log("sending MP3 dropped on page", app.audio.src);
-        return app.audio.src;
+        audioAnalyzer(app.audio.src);
     }
 
   
