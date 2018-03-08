@@ -4,29 +4,30 @@ var User = require("../models/models.js");
 // Routes
 // =============================================================
 module.exports = function(app) {
+    //Testing route
     app.get("/api/allUsers", function(req, res) {
         User.findAll({}).then(function(data) {
           res.json(data);
         });
     });
 
-    // Route to validate existing user login information
-    // app.post("/api/users", function(req, res) {
+    app.post("/api/createNew", function(req, res) {
+        User.create({
+            username: req.body.username,
+            password: req.body.password
+        }).then(function(userData) {
+          res.json(userData);
+        });
+    });
+
+      // Route to validate existing user login information
+    //   app.post("/api/users", function(req, res) {
     //     db.User.findOne({
     //         where: {
     //             username: req.body.username,
     //             password: req.body.password
     //             }
     //         }).then(function(userData) {
-    //       res.json(userData);
-    //     });
-    // });
-
-    // app.post("/api/create", function(req, res) {
-    //     db.User.create({
-    //         username: req.body.username,
-    //         password: req.body.password
-    //     }).then(function(userData) {
     //       res.json(userData);
     //     });
     // });
