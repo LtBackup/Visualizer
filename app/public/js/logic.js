@@ -1,21 +1,30 @@
 $(document).ready(function() {
 
   //////----------------EXISTING USER---------------//////
-  $("existingUserLogin").on("click", function(){
+  $('#existingUserLogin').on("click", function(){
     event.preventDefault();
 
     var existingUsernameInput = $("#existingUsername").val().trim();
     var existingPasswordInput = $("#existingPassword").val().trim();
-      console.log("username", existingUsernameInput, "password", existingPasswordInput);
 
-    if (
-      !existingUsernameInput || !existingPasswordInput) {
+    if (!existingUsernameInput || !existingPasswordInput) {
+      alert("You already have an account!");
       return;
     }
-    
-    $.get("api/allUsers", function(data) {
-        console.log("here is the data", data);
+
+    //Send ajax request to validate existing user data 
+    var existingUser = {
+      username: existingUsernameInput,
+      password: existingPasswordInput
+    };
+    console.log("existing user object sent to server", existingUser);
+
+    $.post("api/existingUsers", existingUser)
+      .then(function (data) {
+        console.log("here is the user that matched", data.username);
+        // $('#username').text(data.username);
     });
+  
 });
 
   //////----------------NEW USER---------------//////
@@ -38,22 +47,12 @@ $(document).ready(function() {
       };
         console.log(newUser);
 
-      $.post("api/createNew", newUser, function (data, status){
-          console.log("Data from server: " + data);
+      $.post("api/createNew", newUser, function (data){
+          console.log("Data from server: ", data);
+          $("#newUsername").val("");
+          $("#newPassword").val("");
       });  
   });
 
-  
-  // Constructing a userData object to hand to the database
-  //     var loginInfo = {
-  //       username: existingUsernameInput.val().trim(),
-  //       password: existingPasswordInput.val().trim()
-  //     };
-  //     console.log(loginInfo);
-  //     return loginInfo;
-  //   }
-  //   //FIX THIS
-  //   $.post("/api/users", loginInfo, function(data, status){
-  //         console.log("Data: " + data);
-  //     });
+//closes the function
 });
