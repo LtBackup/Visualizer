@@ -34,18 +34,12 @@ $(document).ready(function() {
 
       var newUsernameInput = $("#newUsername").val().trim();
       var newPasswordInput = $("#newPassword").val().trim();
-        console.log("username", newUsernameInput, "password", newPasswordInput);
-    
-      if (
-        !newUsernameInput || !newPasswordInput) {
-        return;
-      }
 
       var newUser = {
         username: newUsernameInput,
         password: newPasswordInput
       };
-        console.log(newUser);
+        console.log("new user object", newUser);
 
       $.post("api/createNew", newUser, function (data){
           console.log("Data from server: ", data);
