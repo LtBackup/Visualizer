@@ -10,6 +10,7 @@ window.onload = function () {
     console.log('audio loader connected');
     window.addEventListener('drop', onDrop, false);
     window.addEventListener('dragover', onDrag, false);
+    app.audioIsDragged = false;
 
     function onDrag(e) {
         e.stopPropagation();
@@ -21,13 +22,17 @@ window.onload = function () {
         e.stopPropagation();
         e.preventDefault();
         var droppedFiles = e.dataTransfer.files;
+        app.audioIsDragged = true;
         initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
     }
+
     function initiateAudio(data) {
+       
         if (app.audio) {
-            app.audio.remove();
-            window.cancelAnimationFrame(app.animationFrame);
+            app.audio.pause();
+            //window.cancelAnimationFrame(app.animationFrame);
         }
+       // console.log("Does Audio Object exist yet?", app.audio.currentSrc);
         app.audio = document.createElement('audio'); // creates an html audio element
         app.audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
         // app.audio.autoplay = true;
@@ -40,7 +45,8 @@ window.onload = function () {
         // source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
         // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
         //app.animate();
-        console.log("sending MP3 dropped on page", app.audio.src);
+        console.log("sending MP3 dropped on page", app.audio);
+        console.log("is Dragged?",  app.audioIsDragged);
         audioAnalyzer(app.audio.src);
     }
 
