@@ -30,7 +30,11 @@ window.onload = function () {
        
         if (app.audio) {
             app.audio.pause();
+<<<<<<< HEAD
             //window.cancelAnimationFrame(app.animationFrame);
+=======
+            window.cancelAnimationFrame(app.animationFrame);
+>>>>>>> 86beca037a3bbd76c8c003e5cb097509a3f14c61
         }
        // console.log("Does Audio Object exist yet?", app.audio.currentSrc);
         app.audio = document.createElement('audio'); // creates an html audio element
