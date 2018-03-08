@@ -123,7 +123,8 @@ function audioAnalyzer(audioURL){
 
         // set the fill style
         ctx.fillStyle = gradient;
-
+        console.log("array", array);
+        console.log("array2", array2);
         // create the meters
         ctx.fillRect(0, 130 - average, 25, 130);
         ctx.fillRect(30, 130 - average2, 25, 130);
