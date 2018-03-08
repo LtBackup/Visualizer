@@ -1,3 +1,4 @@
+function audioAnalyzer(audioURL){
     // create the audio context (chrome only for now)
     // create the audio context (chrome only for now)
     if (! window.AudioContext) {
@@ -6,6 +7,7 @@
         }
         window.AudioContext = window.webkitAudioContext;
     }
+    console.log("inside the audio analyzer");
     var context = new (window.AudioContext || window.webkitAudioContext)();
     var audioBuffer;
     var sourceNode;
@@ -28,7 +30,7 @@
 
     // load the sound
     setupAudioNodes();
-    loadSound("audio/pulse.mp3");
+    loadSound(audioURL);
 
 
     function setupAudioNodes() {
@@ -141,3 +143,4 @@
         average = values / length;
         return average;
     }
+}
