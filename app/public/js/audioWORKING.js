@@ -133,13 +133,14 @@ function audioAnalyzer(audioURL) {
         // var average2 = getAverageVolume(array2);
 
         // clear the current state
-        ctx.clearRect(0, 0, 60, 130);
+        //ctx.clearRect(0, 0, 60, 130);
 
         // set the fill style
         ctx.fillStyle = gradient;
 
         // create the meters
         for (var i = 1, startPoint = 0 + canvas.width * .02; i < 9; i++ , startPoint += canvas.width * .12) {
+            ctx.clearRect(startPoint, 0, canvas.width * .1, canvas.height);
             //var startPoint = 0 + canvas.width * .02;
             ctx.fillRect(startPoint, 200 - averages[i - 1], canvas.width * .1, canvas.height);
         }
@@ -155,10 +156,10 @@ function audioAnalyzer(audioURL) {
         // get all the frequency amplitudes
         for (var i = 0; i < array.length; i++) {
             values += array[i];
-            console.log(array[i]);
+            //console.log(array[i]);
             
-            if (i % (array.length / split) === 0) {
-                average[i / (array.length / split)-1] = values / length;
+            if ((i + 1) % (array.length / split) === 0) {
+                average[((i + 1) / (array.length / split)) -1] = values / (array.length / split) / 256 * canvas.height;
                 values = 0;
             }
         }

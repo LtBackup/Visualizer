@@ -52,7 +52,7 @@ function audioAnalyzer(audioURL){
 
         // create a buffer source node
         sourceNode = context.createBufferSource();
-        splitter = context.createChannelSplitter(6);
+        splitter = context.createChannelSplitter();
 
         // connect the source to the analyser and the splitter
         sourceNode.connect(splitter);

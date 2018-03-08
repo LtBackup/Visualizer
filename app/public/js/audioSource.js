@@ -25,7 +25,7 @@ window.onload = function () {
     }
     function initiateAudio(data) {
         if (app.audio) {
-            app.audio.remove();
+            app.audio.pause();
             window.cancelAnimationFrame(app.animationFrame);
         }
         app.audio = document.createElement('audio'); // creates an html audio element
