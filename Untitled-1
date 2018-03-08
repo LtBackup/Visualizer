@@ -25,13 +25,12 @@ module.exports = function(app) {
         });
     });
 
-    //Route to create new user
     app.post("/api/createNew", function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
 
         var uniqueUser = function (username){
-            User.count({where: {username: username}
+            User.count({where: {username: req.body.username}
                 }).then(count => {
                     console.log(count, "count");
 
@@ -51,8 +50,6 @@ module.exports = function(app) {
                         });
                     }
                 });
-        
-            } 
-        uniqueUser(username);      
+        }        
     });    
 }
