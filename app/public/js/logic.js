@@ -3,6 +3,7 @@ $(document).ready(function() {
   //////----------------EXISTING USER---------------//////
   $('#existingUserLogin').on("click", function(){
     event.preventDefault();
+    $('#existingUserModal').modal('hide');
 
     var existingUsernameInput = $("#existingUsername").val().trim();
     var existingPasswordInput = $("#existingPassword").val().trim();
@@ -31,6 +32,7 @@ $(document).ready(function() {
 
     $("#newUserLogin").on("click", function() {
       event.preventDefault();
+      $('#loginModal').modal('hide');
 
       var newUsernameInput = $("#newUsername").val().trim();
       var newPasswordInput = $("#newPassword").val().trim();
