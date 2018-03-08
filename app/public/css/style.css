@@ -9,3 +9,7 @@
 #home{
    float: left;
 }
+
+.error {
+    color: red;
+}
