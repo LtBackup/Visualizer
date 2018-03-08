@@ -3,15 +3,9 @@ $(document).ready(function() {
   //////----------------EXISTING USER---------------//////
   $('#existingUserLogin').on("click", function(){
     event.preventDefault();
-    $('#existingUserModal').modal('hide');
 
     var existingUsernameInput = $("#existingUsername").val().trim();
     var existingPasswordInput = $("#existingPassword").val().trim();
-
-    if (!existingUsernameInput || !existingPasswordInput) {
-      alert("You already have an account!");
-      return;
-    }
 
     //Send ajax request to validate existing user data 
     var existingUser = {
@@ -22,8 +16,15 @@ $(document).ready(function() {
 
     $.post("api/existingUsers", existingUser)
       .then(function (data) {
-        console.log("here is the user that matched", data.username);
-        // $('#username').text(data.username);
+        if (data){
+          console.log("here is the user that matched", data);
+          $('#existingUserModal').modal('hide');
+        }
+        else {
+          $(".error").text("Either your username or password is incorrect. Please try again!");
+          $("#existingUsername").val("");
+          $("#existingPassword").val("");
+        }
     });
   
 });
@@ -32,7 +33,6 @@ $(document).ready(function() {
 
     $("#newUserLogin").on("click", function() {
       event.preventDefault();
-      $('#loginModal').modal('hide');
 
       var newUsernameInput = $("#newUsername").val().trim();
       var newPasswordInput = $("#newPassword").val().trim();
@@ -44,9 +44,16 @@ $(document).ready(function() {
         console.log("new user object", newUser);
 
       $.post("api/createNew", newUser, function (data){
+        if (data){
           console.log("Data from server: ", data);
+          $('#newUserModal').modal('hide');
+          
+        } else {
+          console.log("user already exists with that name");
+          $(".error").text("A user already exists with that name. Try again!");
           $("#newUsername").val("");
           $("#newPassword").val("");
+        }
       });  
   });
 
