@@ -18,7 +18,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create an Account to Get Started</h5>
+                    <h5 class="modal-title">Create an Account</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -33,9 +33,6 @@
                     <div class="error"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#existingUserModal" id="home" align="left">
-                        Already Have an Account?
-                    </button>
                     <button type="button" class="btn btn-success" id="newUserLogin">Submit</button>
                 </div>
             </div>
@@ -46,9 +43,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Welcome Back! Please Login.</h5>
+                    <h5 class="modal-title">Log In to Get Started</h5>
                 </div>
                 <div class="modal-body">
+                    <a href="#" data-toggle="modal" data-target="#newUserModal" id="home">
+                        New Users: Click Here to Create an Account
+                    </a>
+                    <br>
+                    <br>
                     <div class="form-group">
                         <label for="existingUsername">Username</label>
                         <input type="text" class="form-control" id="existingUsername" placeholder="Enter Your Username" pattern=".{5,}" required
@@ -62,7 +64,7 @@
                     <div class="error"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="existingUserLogin">Submit</button>
+                    <button type="button" class="btn btn-success" id="existingUserLogin">Submit</button>
                 </div>
             </div>
         </div>
@@ -85,12 +87,14 @@
     <script src="js/audioSource.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(window).on('load', function () {
-            $('#newUserModal').modal('show');
+            $('#existingUserModal').modal('show');
         });
 
         $('#home').on('click', function () {
+            $('#existingUserModal').modal('hide');
             $('#newUserModal').modal('hide');
         });
+
     </script>
     <script src="js/logic.js" type="text/javascript"></script>
 </body>
