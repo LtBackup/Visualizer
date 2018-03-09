@@ -2,6 +2,7 @@ var app = app || {};
 var source;
 var buffer;
 var analyser;
+var audio = false;
 
 window.onload = function () {
 
@@ -13,7 +14,7 @@ window.onload = function () {
 
     function onDrag(e) {
         e.stopPropagation();
-        e.preventDefault();
+        e.preventDefault();4
         // $('#notification').velocity('fadeOut', { duration: 150 });
         return false;
     }
@@ -24,24 +25,23 @@ window.onload = function () {
         initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
     }
     function initiateAudio(data) {
-        if (app.audio) {
-            app.audio.pause();
-            window.cancelAnimationFrame(app.animationFrame);
+        if (audio) {
+            audio.pause();
+            window.cancelAnimationFrame(animationFrame);
         }
-        app.audio = document.createElement('audio'); // creates an html audio element
-        app.audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
-        // app.audio.autoplay = true;
-        // // app.audio.play();
-        // app.play = true;
-        // document.body.appendChild(app.audio);
+        audio = document.createElement('audio'); // creates an html audio element
+        audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
+        audio.autoplay = true;
+        // app.audio.play();
+        var play = true;
+        document.body.appendChild(audio);
         // app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
         // source = app.ctx.createMediaElementSource(app.audio); // creates audio source
         // analyser = app.ctx.createAnalyser(); // creates analyserNode
         // source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
         // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
-        //app.animate();
-        console.log("sending MP3 dropped on page", app.audio.src);
-        audioAnalyzer(app.audio.src);
+        console.log("sending MP3 dropped on page", audio.src);
+        audioAnalyzer(audio);
     }
 
   
