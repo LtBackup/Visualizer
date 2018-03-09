@@ -2,57 +2,47 @@ var app = app || {};
 var source;
 var buffer;
 var analyser;
+var audio = false;
 
 window.onload = function () {
 
-    // app.init();
+   // app.init();
 
-    console.log('audio loader connected');
-    window.addEventListener('drop', onDrop, false);
-    window.addEventListener('dragover', onDrag, false);
-    app.audioIsDragged = false;
+   console.log('audio loader connected');
+   window.addEventListener('drop', onDrop, false);
+   window.addEventListener('dragover', onDrag, false);
 
-    function onDrag(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        // $('#notification').velocity('fadeOut', { duration: 150 });
-        return false;
-    }
-    function onDrop(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var droppedFiles = e.dataTransfer.files;
-        app.audioIsDragged = true;
-        initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
-    }
+   function onDrag(e) {
+       e.stopPropagation();
+       e.preventDefault();4
+       // $('#notification').velocity('fadeOut', { duration: 150 });
+       return false;
+   }
+   function onDrop(e) {
+       e.stopPropagation();
+       e.preventDefault();
+       var droppedFiles = e.dataTransfer.files;
+       initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
+   }
+   function initiateAudio(data) {
+       if (audio) {
+           audio.pause();
+           window.cancelAnimationFrame(animationFrame);
+       }
+       audio = document.createElement('audio'); // creates an html audio element
+       audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
+       audio.autoplay = true;
+       // app.audio.play();
+       var play = true;
+       document.body.appendChild(audio);
+       // app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
+       // source = app.ctx.createMediaElementSource(app.audio); // creates audio source
+       // analyser = app.ctx.createAnalyser(); // creates analyserNode
+       // source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
+       // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
+       console.log("sending MP3 dropped on page", audio.src);
+       audioAnalyzer(audio);
+   }
 
-    function initiateAudio(data) {
-       
-        if (app.audio) {
-            app.audio.pause();
-<<<<<<< HEAD
-            //window.cancelAnimationFrame(app.animationFrame);
-=======
-            window.cancelAnimationFrame(app.animationFrame);
->>>>>>> 86beca037a3bbd76c8c003e5cb097509a3f14c61
-        }
-       // console.log("Does Audio Object exist yet?", app.audio.currentSrc);
-        app.audio = document.createElement('audio'); // creates an html audio element
-        app.audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
-        // app.audio.autoplay = true;
-        // // app.audio.play();
-        // app.play = true;
-        // document.body.appendChild(app.audio);
-        // app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
-        // source = app.ctx.createMediaElementSource(app.audio); // creates audio source
-        // analyser = app.ctx.createAnalyser(); // creates analyserNode
-        // source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
-        // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
-        //app.animate();
-        console.log("sending MP3 dropped on page", app.audio);
-        console.log("is Dragged?",  app.audioIsDragged);
-        audioAnalyzer(app.audio.src);
-    }
-
-  
+ 
 }

@@ -14,11 +14,11 @@
 </head>
 
 <body>
-    <div class="modal fade" id="loginModal">
+    <div class="modal fade" id="newUserModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create an Account to Get Started</h5>
+                    <h5 class="modal-title">Create an Account</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -30,11 +30,9 @@
                         <label for="newPassword">Password</label>
                         <input type="password" class="form-control" id="newPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum">
                     </div>
+                    <div class="error"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#existingUserModal" id="home" align="left">
-                        Already Have an Account?
-                    </button>
                     <button type="button" class="btn btn-success" id="newUserLogin">Submit</button>
                 </div>
             </div>
@@ -45,9 +43,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Welcome Back! Please Login.</h5>
+                    <h5 class="modal-title">Log In to Get Started</h5>
                 </div>
                 <div class="modal-body">
+                    <a href="#" data-toggle="modal" data-target="#newUserModal" id="home">
+                        New Users: Click Here to Create an Account
+                    </a>
+                    <br>
+                    <br>
                     <div class="form-group">
                         <label for="existingUsername">Username</label>
                         <input type="text" class="form-control" id="existingUsername" placeholder="Enter Your Username" pattern=".{5,}" required
@@ -58,17 +61,21 @@
                         <input type="password" class="form-control" id="existingPassword" placeholder="Enter Your Password" pattern=".{5,}" required
                             title="5 characters minimum">
                     </div>
+                    <div class="error"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="existingUserLogin">Submit</button>
+                    <button type="button" class="btn btn-success" id="existingUserLogin">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="container-fluid">
-        <canvas id="canvas" style="display: block;"></canvas>
-    </div>
+        
+        <div id="instructions"> 
+            <p>Drag and drop an mp3 to play</p>
+            <p>(press 'K' to hide keyboard controls)</p>
+        </div>
+    
+    <canvas id="canvas" style="display: block;"></canvas>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -80,15 +87,17 @@
 
     <!-- Optional JavaScript -->
     <script src="js/audio.js"></script>
+    <script src="js/animate.js"></script>
     <script src="js/audioSource.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(window).on('load', function () {
-            $('#loginModal').modal('show');
+            $('#existingUserModal').modal('show');
+        });
+        $('#home').on('click', function () {
+            $('#existingUserModal').modal('hide');
+            $('#newUserModal').modal('hide');
         });
 
-        $('#home').on('click', function () {
-            $('#loginModal').modal('hide');
-        });
     </script>
     <script src="js/logic.js" type="text/javascript"></script>
 </body>
