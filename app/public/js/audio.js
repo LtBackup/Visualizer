@@ -139,10 +139,10 @@ function audioAnalyzer(audioURL) {
         ctx.fillStyle = gradient;
 
         // create the meters
-        for (var i = 1, startPoint = 0 + canvas.width * .02; i < 9; i++ , startPoint += canvas.width * .12) {
-            ctx.clearRect(startPoint, 0, canvas.width * .1, canvas.height);
-            //var startPoint = 0 + canvas.width * .02;
-            ctx.fillRect(startPoint, 200 - averages[i - 1], canvas.width * .1, canvas.height);
+        // I cut off the last three averages in the array since that spectrum of the audio frequency area tends to be underwhelming
+        for (var i = 1, startPoint = canvas.width * .025; i < 6; i++ , startPoint += canvas.width * .2) {
+            ctx.clearRect(startPoint - canvas.width * .025, 0, canvas.width * .18, canvas.height);
+            ctx.fillRect(startPoint, 200 - averages[i - 1], canvas.width * .15, canvas.height);
         }
     }
 
@@ -150,7 +150,6 @@ function audioAnalyzer(audioURL) {
         var values = 0;
         var split = 8;
         var average = [];
-
         // var length = array.length;
 
         // get all the frequency amplitudes
@@ -159,7 +158,7 @@ function audioAnalyzer(audioURL) {
             //console.log(array[i]);
             
             if ((i + 1) % (array.length / split) === 0) {
-                average[((i + 1) / (array.length / split)) -1] = values / (array.length / split) / 256 * canvas.height;
+                average[((i + 1) / (array.length / split)) -1] = values / (array.length / split) / 200 * canvas.height;
                 values = 0;
             }
         }

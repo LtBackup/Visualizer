@@ -3,7 +3,7 @@
     /* background-image: url(https://media.giphy.com/media/OVlFjmEDhx9rG/giphy.gif); /*tv static from Giphy */
     /* background: linear-gradient(to right, black, white);  gradient */
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }
 
 #home{
