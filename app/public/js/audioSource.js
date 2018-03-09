@@ -22,6 +22,7 @@ window.onload = function () {
        e.stopPropagation();
        e.preventDefault();
        var droppedFiles = e.dataTransfer.files;
+      $('#instructions').fadeOut(1000);
        initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
    }
    function initiateAudio(data) {

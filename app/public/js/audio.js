@@ -106,6 +106,22 @@ function audioAnalyzer(audio) {
         return average;
     }
     
+// toggle sound  with space bar
+$('body').keydown(function(e) {
+    if (e.which === 32) {
+        console.log("context.state", context.state);
+        console.log("Spacebar click...");
+        if (context.state === 'running') {
+            context.suspend().then(function () {
+                $('#status').html('Suspend music...').fadeOut(2000);
+            });
+        } else if (context.state === 'suspended') {
+            context.resume().then(function () {
+                $('#status').html('Resume music...').fadeOut(2000);
+            });  
+        }
+    }
+});
 
     function setupAudioNodes() {
 
