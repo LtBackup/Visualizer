@@ -133,6 +133,7 @@
         var i = 0;
         var delta = 0;
         var bool = true;
+        var scalar = 0;
         const startingVertices = geometry.vertices.map(e => ({ ...e }));
         function render() {
             if (i === geometry.vertices.length) {
@@ -144,17 +145,25 @@
             //console.log(geometry.vertices);
             //console.log(i);
             //geometry.vertices[i].x = averages[i];
-            delta += .1
-            if (bool) {
-                geometry.vertices[Math.floor(Math.random() * geometry.vertices.length)].x = startingVertices[i].x * averages[0] / 50;
+            //delta += .1
+            //if (bool) {
+                //geometry.vertices[Math.floor(Math.random() * geometry.vertices.length)].x = startingVertices[i].x * averages[0] / 50;
+                // geometry.vertices[i].x = startingVertices[i].x * averages[0] / 50;
+                // geometry.vertices[i].y = startingVertices[i].y * averages[0] / 50;
+                scalar = averages[0] /50
+                mesh.scale.x = scalar; // SCALE
+                mesh.scale.y = scalar; // SCALE
+                mesh.scale.z = scalar; // SCALE
                 geometry.verticesNeedUpdate = true;
-            }
-            else{
-                geometry.vertices[i].x = startingVertices[i].x;
-                geometry.verticesNeedUpdate = true;
+            // }
+            // else{
+            //     mesh.scale.x = 1;
+            //     mesh.scale.y = 1;
+            //     mesh.scale.z = 1;
+            //     geometry.verticesNeedUpdate = true;
                 
-            }
-            bool = !bool;
+            // }
+            //bool = !bool;
 
             renderer.render(scene, camera);
             requestAnimationFrame(render);
