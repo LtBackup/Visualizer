@@ -1,3 +1,5 @@
+var averages = [];
+
 function audioAnalyzer(audio) {
     // create the audio context (chrome only for now)
     // create the audio context (chrome only for now)
@@ -45,7 +47,7 @@ function audioAnalyzer(audio) {
     function animate() {
         (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(animate);
         fillSquares();
-        console.log(analyser);
+        //console.log(analyser);
         // stats.begin();
         // animateParticles();
         // checkVisualizer();
@@ -55,12 +57,11 @@ function audioAnalyzer(audio) {
     }
     
     function fillSquares() {
-        var averages = [];
         var array = [];
         // get the average for the first channel
         // for (var i = 0; i < 8; i++) {
         array = new Uint8Array(analyser.frequencyBinCount);
-        console.log(array);
+        // console.log(array);
         analyser.getByteFrequencyData(array);
         averages = getAverageVolume(array);
         console.log(averages);
@@ -254,4 +255,7 @@ $('body').keydown(function(e) {
     //     }
     //     return average;
     // }
+
+    //begin three.js logic
+    
 }
