@@ -36,9 +36,20 @@
 
     requestAnimationFrame(render);
 
+    var i = 0;
+    var delta = 0;
     function render() {
         mesh.rotation.x += 0.05;
         mesh.rotation.y += 0.05;
+        console.log(geometry.vertices);
+        //geometry.vertices[i].x = averages[i];
+        delta += .1
+        geometry.vertices[i].x = -25 + Math.sin(delta) * 50;
+        geometry.verticesNeedUpdate = true;
+        if( i === geometry.vertices.length - 1){
+            i = 0;
+        }
+
         renderer.render(scene, camera);
         requestAnimationFrame(render);
     }
