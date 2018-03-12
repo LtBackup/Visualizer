@@ -206,8 +206,6 @@
     </script> -->
     <script>
         //SET UP GLOBAL VARIABLES
-        var meshArrs = [meshArr1, meshArr2];
-        // var geometryArrs = [geometry1, geometry2];
 
         var mx = -500;
         var numBars = 50;
@@ -238,149 +236,212 @@
 
         var meshArr1 = [];
         var meshArr2 = [];
+        var meshArr3 = [];
+        var meshArr4 = [];
         var geometryArr1 = [];
         var geometryArr2 = [];
+        var geometryArr3 = [];
+        var geometryArr4 = [];
 
-            //creates stuff for cubes
-            var geometry1 = new THREE.BoxGeometry(100, 100, 100);
-            var geometry2 = new THREE.BoxGeometry(100, 100, 100);
-            var geometry3 = new THREE.BoxGeometry(100, 100, 100);
-            var geometry4 = new THREE.BoxGeometry(100, 100, 100);
-            var geometry5 = new THREE.BoxGeometry(100, 100, 100);
-            geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
-            console.log(geometryArr1, "geometryArr1");
-        
-            var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2 });
-            var mesh1 = new THREE.Mesh(geometry1, material);
-            var mesh2 = new THREE.Mesh(geometry2, material);
-            var mesh3 = new THREE.Mesh(geometry3, material);
-            var mesh4 = new THREE.Mesh(geometry4, material);
-            var mesh5 = new THREE.Mesh(geometry5, material);
-            meshArr1.push(mesh1, mesh2, mesh3, mesh4, mesh5);
-            console.log(meshArr1, "meshArr1");
+        var meshArrs = [meshArr1, meshArr2, meshArr3, meshArr4];
+        var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4];
 
-            mesh1.position.set(0, 0, -1000);
-            mesh2.position.set(500, 250, -1000);
-            mesh3.position.set(500, -250, -1000);
-            mesh4.position.set(-500, -250, -1000);
-            mesh5.position.set(-500, 250, -1000);
+        //creates stuff for cubes
+        var geometry1 = new THREE.BoxGeometry(100, 100, 100);
+        var geometry2 = new THREE.BoxGeometry(100, 100, 100);
+        var geometry3 = new THREE.BoxGeometry(100, 100, 100);
+        var geometry4 = new THREE.BoxGeometry(100, 100, 100);
+        var geometry5 = new THREE.BoxGeometry(100, 100, 100);
+        geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
+        //console.log(geometryArr1, "geometryArr1");
 
-            scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
+        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2 });
+        var mesh1 = new THREE.Mesh(geometry1, material);
+        var mesh2 = new THREE.Mesh(geometry2, material);
+        var mesh3 = new THREE.Mesh(geometry3, material);
+        var mesh4 = new THREE.Mesh(geometry4, material);
+        var mesh5 = new THREE.Mesh(geometry5, material);
+        meshArr1.push(mesh1, mesh2, mesh3, mesh4, mesh5);
+        //console.log(meshArr1, "meshArr1");
 
-            //creates stuff for bars
-            for (var i = 0; i < numBars; i++) {
-                var y = Math.floor((Math.random() * 300) + 100);
-                var geometry = new THREE.BoxGeometry(10, y, 10);
+        mesh1.position.set(0, 0, -1000);
+        mesh2.position.set(500, 250, -1000);
+        mesh3.position.set(500, -250, -1000);
+        mesh4.position.set(-500, -250, -1000);
+        mesh5.position.set(-500, 250, -1000);
 
-                var material = new THREE.MeshNormalMaterial();
+        scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
 
-                var mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(mx, 0, -1000);
+        //creates stuff for bars
+        for (var i = 0; i < numBars; i++) {
+            var y = Math.floor((Math.random() * 300) + 100);
+            var geometry = new THREE.BoxGeometry(10, y, 10);
 
-                scene.add(mesh);
-                mx += 20;
+            var material = new THREE.MeshNormalMaterial();
 
-                meshArr2.push(mesh);
-                geometryArr2.push(geometry);
-            }
+            var mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(mx, 0, -1000);
 
-                        console.log(meshArr2, "meshArr2");
-                        console.log(geometryArr2, "geometryArr2");
+            scene.add(mesh);
+            mx += 20;
 
-    
-        function clearScene(i){
+            meshArr2.push(mesh);
+            geometryArr2.push(geometry);
+        }
+
+        //console.log(meshArr2, "meshArr2");
+        //console.log(geometryArr2, "geometryArr2");
+
+
+        function clearScene(i) {
             while (scene.children.length > 0) {
                 scene.remove(scene.children[0]);
             }
         }
 
         //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
-        function createGeometry(e) {
+        function setKeypress(e) {
+            //cancelAnimationFrame(function () { });
             switch (e.which) {
                 case 49:
                     keypress = 1;
-                    clearScene();
-                    createCubes();
+                    //clearScene();
+                    //createCubes();
                     break;
                 case 50:
                     keypress = 2;
-                    clearScene();
-                    createBars();
+                    //clearScene();
+                    //createBars();
+                    break;
+                case 51:
+                    keypress = 3;
+                    //clearScene();
+                    //createBars();
+                    break;
+                case 52:
+                    keypress = 4;
+                    //clearScene();
+                    //createBars();
                     break;
             }
+            console.log(keypress);
+            // requestAnimationFrame(render);
+
         }
 
-        function render(keypress){
-            
-            
-        }
+        requestAnimationFrame(render);
+
+        function render() {
 
 
-        //CREATE BARS IF 2 IS KEYED
-        function createBars() {
 
-            requestAnimationFrame(render);
+            //const startingVertices = geometry.vertices.map(e => ({ ...e }));
 
-            const startingVertices = geometry.vertices.map(e => ({ ...e }));
+            //function render() {
+            switch (keypress) {
+                case 1:
+                    meshArr1[0].rotation.x += 0.02;
+                    meshArr1[0].rotation.y += 0.02;
+                    console.log("running 1");
 
-            function render() {
+                    var scalars = [];
+                    for (let j = 0; j < 5; j++) {
+                        scalars.push(averages[j] / 50);
+                    }
 
-                meshArrs[keypress - 1];
+                    for (let k = 0; k < meshArr1.length; k++) {
+                        meshArr1[k].scale.x = scalars[k]; // SCALE
+                        meshArr1[k].scale.y = scalars[k]; // SCALE
+                        meshArr1[k].scale.z = scalars[k]; // SCALE
+                        geometryArr1[k].verticesNeedUpdate = true;
+                    }
+                    break;
+                case 2:
 
-                if (i === geometry.vertices.length) {
-                    i = 0;
-                }
+                    scalar = averages[0] / 50
 
-                scalar = averages[0] / 50
+                    for (var i = 0; i < meshArr2.length; i++) {
+                        meshArr2[i].rotation.x += 0.01;
+                        meshArr2[i].rotation.y += 0.01;
 
-                for (var i = 0; i < meshArr2.length; i++) {
-                    meshArr2[i].rotation.x += 0.01;
-                    meshArr2[i].rotation.y += 0.01;
+                        meshArr2[i].scale.y = scalar; // SCALE
+                        meshArr2[i].scale.z = scalar; // SCALE
+                        geometryArr2[i].verticesNeedUpdate = true;
+                    }
+                    break;
 
-                    meshArr2[i].scale.y = scalar; // SCALE
-                    meshArr2[i].scale.z = scalar; // SCALE
-                    geometryArr2[i].verticesNeedUpdate = true;
-                }
-
-                renderer.render(scene, camera);
-                requestAnimationFrame(render);
-
-                i++;
             }
-        }
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(render);
 
-        //CREATE BARS IF 1 IS KEYED
-        function createCubes() {
-
-            requestAnimationFrame(render);
-
-            function render() {
-                if (i === geometry1.vertices.length) {
-                    i = 0;
-                }
-                mesh1.rotation.x += 0.02;
-                mesh1.rotation.y += 0.02;
-
-                var scalars = [];
-                for (let j = 0; j < 5; j++) {
-                    scalars.push(averages[j] / 50);
-                }
-
-                for (let k = 0; k < meshArr1.length; k++) {
-                    meshArr1[k].scale.x = scalars[k]; // SCALE
-                    meshArr1[k].scale.y = scalars[k]; // SCALE
-                    meshArr1[k].scale.z = scalars[k]; // SCALE
-                    geometryArr1[k].verticesNeedUpdate = true;
-                }
-
-                renderer.render(scene, camera);
-                requestAnimationFrame(render);
-
-                i++;
             }
-        }
 
-        document.addEventListener('keydown', createGeometry);
+
+
+            //CREATE BARS IF 2 IS KEYED
+            //function createBars() {
+
+            // requestAnimationFrame(render);
+
+            // const startingVertices = geometry.vertices.map(e => ({ ...e }));
+
+            // function render() {
+
+            //     meshArrs[keypress - 1];
+
+            //     if (i === geometry.vertices.length) {
+            //         i = 0;
+            //     }
+
+            //     scalar = averages[0] / 50
+
+            //     for (var i = 0; i < meshArr2.length; i++) {
+            //         meshArr2[i].rotation.x += 0.01;
+            //         meshArr2[i].rotation.y += 0.01;
+
+            //         meshArr2[i].scale.y = scalar; // SCALE
+            //         meshArr2[i].scale.z = scalar; // SCALE
+            //         geometryArr2[i].verticesNeedUpdate = true;
+            //     }
+
+            //     renderer.render(scene, camera);
+            //     requestAnimationFrame(render);
+
+            //     i++;
+            // }
+            //}
+
+            //CREATE BARS IF 1 IS KEYED
+            // function createCubes() {
+
+            //     requestAnimationFrame(render);
+
+            //     function render() {
+            //         if (i === geometry1.vertices.length) {
+            //             i = 0;
+            //         }
+            //         mesh1.rotation.x += 0.02;
+            //         mesh1.rotation.y += 0.02;
+
+            //         var scalars = [];
+            //         for (let j = 0; j < 5; j++) {
+            //             scalars.push(averages[j] / 50);
+            //         }
+
+            //         for (let k = 0; k < meshArr1.length; k++) {
+            //             meshArr1[k].scale.x = scalars[k]; // SCALE
+            //             meshArr1[k].scale.y = scalars[k]; // SCALE
+            //             meshArr1[k].scale.z = scalars[k]; // SCALE
+            //             geometryArr1[k].verticesNeedUpdate = true;
+            //         }
+
+            //         renderer.render(scene, camera);
+            //         requestAnimationFrame(render);
+
+            //         //i++;
+            //     }
+            // }
+        document.addEventListener('keydown', setKeypress);
 
     </script>
 
