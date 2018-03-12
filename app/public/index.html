@@ -85,6 +85,8 @@
     <canvas id="canvas" style="display: block;"></canvas>
     <br/>
     <canvas id="myCanvas" style="display: block;"></canvas>
+    <br/>
+    <canvas id="mollyCanvas" style="display: block;"></canvas>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -201,6 +203,73 @@
 
             i++;
         }
+    </script>
+    <script>
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mollyCanvas"), antialias: true });
+        renderer.setClearColor(0x333F47);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / innerHeight, 0.1, 3000);
+        // camera.position.set(0, 20, 100);
+
+        var scene = new THREE.Scene();
+
+        var light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+
+        var light1 = new THREE.PointLight(0xffffff, 0.5);
+        scene.add(light1);
+
+        var mx = -500;
+        var numBars = 50;
+        var meshArray = [];
+
+        for (var i = 0; i < numBars; i++){
+            var y = Math.floor((Math.random() * 300) + 100);
+            var geometry = new THREE.BoxGeometry(10, y, 10);
+
+            var material = new THREE.MeshNormalMaterial();
+
+            var mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(mx, 0, -1000);
+
+            scene.add(mesh);
+            mx += 20;
+
+            meshArray.push(mesh);
+        }
+
+        requestAnimationFrame(render);
+
+        var i = 0;
+        var delta = 0;
+        var bool = true;
+        var scalar = 0;
+        const startingVertices = geometry.vertices.map(e => ({ ...e }));
+       
+        function render() {
+            if (i === geometry.vertices.length) {
+                i = 0;
+            }
+
+            scalar = averages[0] /50
+
+            for (var i = 0; i < meshArray.length; i++){
+                meshArray[i].rotation.x += 0.01;
+                meshArray[i].rotation.y += 0.01;
+                
+                meshArray[i].scale.y = scalar; // SCALE
+                meshArray[i].scale.z = scalar; // SCALE
+                geometry.verticesNeedUpdate = true;
+            }
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+
+            i++;
+        }
+
     </script>
 
 </body>
