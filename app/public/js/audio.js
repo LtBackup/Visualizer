@@ -1,3 +1,5 @@
+var averages = [];
+
 function audioAnalyzer(audio) {
     // create the audio context (chrome only for now)
     // create the audio context (chrome only for now)
@@ -81,7 +83,6 @@ function audioAnalyzer(audio) {
     }
     
     function fillSquares() {
-        var averages = [];
         var array = [];
         // get the average for the first channel
         // for (var i = 0; i < 8; i++) {
@@ -280,4 +281,7 @@ $('body').keydown(function(e) {
     //     }
     //     return average;
     // }
+
+    //begin three.js logic
+    
 }
