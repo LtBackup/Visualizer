@@ -106,7 +106,6 @@
     </script>
     <script src="js/logic.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
-    <script src="js/controls/OrbitControls.js"></script>
     <!-- <script>
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
         renderer.setClearColor(0x00ff00);
@@ -216,7 +215,7 @@
 
         var mx = -500;
         var numBars = 50;
-        var scalar = averages[0] /50
+        var meshArray = [];
 
         for (var i = 0; i < numBars; i++){
             var y = Math.floor((Math.random() * 300) + 100);
@@ -229,6 +228,8 @@
 
             scene.add(mesh);
             mx += 20;
+
+            meshArray.push(mesh);
         }
 
         requestAnimationFrame(render);
@@ -243,14 +244,17 @@
             if (i === geometry.vertices.length) {
                 i = 0;
             }
-            mesh.rotation.x += 0.01;
-            mesh.rotation.y += 0.01;
-            
-                scalar = averages[0] /50
-                mesh.scale.x = scalar; // SCALE
-                mesh.scale.y = scalar; // SCALE
-                mesh.scale.z = scalar; // SCALE
+
+            scalar = averages[0] /50
+
+            for (var i = 0; i < meshArray.length; i++){
+                meshArray[i].rotation.x += 0.01;
+                meshArray[i].rotation.y += 0.01;
+                
+                meshArray[i].scale.y = scalar; // SCALE
+                meshArray[i].scale.z = scalar; // SCALE
                 geometry.verticesNeedUpdate = true;
+            }
 
             renderer.render(scene, camera);
             requestAnimationFrame(render);
