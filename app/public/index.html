@@ -314,8 +314,8 @@
 
         //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
         function setKeypress(e) {
-            //cancelAnimationFrame(function () { });
-            if (keypress === 1 || keypress === 2 || keypress === 3 || keypress === 4) {
+            if (e.which >= 49 && e.which <= 52) {
+                console.log("hiding");
                 meshArrs[keypress - 1].forEach(e => e.visible = false);
             }
             switch (e.which) {
