@@ -213,20 +213,20 @@
         var light1 = new THREE.PointLight(0xffffff, 0.5);
         scene.add(light1);
 
-        var geometry = new THREE.BoxGeometry(10, 100, 10);
-        var material = new THREE.MeshNormalMaterial();
-
-        // var mesh = new THREE.Mesh(geometry, material);
-        //     mesh.position.set = (0, 0, -1000);
-
         var mx = -500;
+        var numBars = 50;
 
-        for (var i = 0; i < 50; i++){
+        for (var i = 0; i < numBars; i++){
+            var y = Math.floor((Math.random() * 300) + 100);
+            var geometry = new THREE.BoxGeometry(10, y, 10);
+
+            var material = new THREE.MeshNormalMaterial();
+
             var mesh = new THREE.Mesh(geometry, material);
             mesh.position.set(mx, 0, -1000);
 
             scene.add(mesh);
-            mx+=20;
+            mx += 20;
         }
 
         requestAnimationFrame(render);
