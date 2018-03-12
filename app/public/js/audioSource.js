@@ -25,10 +25,17 @@ window.onload = function () {
       $('#instructions').fadeOut(1000);
        initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
    }
+   function animationFrame(){
+       console.log("Hi. Animation canceled.")
+   };
    function initiateAudio(data) {
+    //    if (animationFrame) {
+    //     window.cancelAnimationFrame(animationFrame);
+    //    }
        if (audio) {
            audio.pause();
            window.cancelAnimationFrame(animationFrame);
+          // window.onanimationcancel = window.onload;
        }
        audio = document.createElement('audio'); // creates an html audio element
        audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
@@ -46,4 +53,4 @@ window.onload = function () {
    }
 
  
-}
+}();

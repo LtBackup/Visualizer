@@ -133,8 +133,8 @@ function audioAnalyzer(audio) {
         return average;
     }
 
-// toggle sound  with space bar
-$('body').keydown(function(e) {
+// toggle sound with space bar, also prevent keydown listeners from stacking.
+$('body').off('keydown').keydown(function(e) {
     if (e.which === 32) {
         console.log("context.state", context.state);
         console.log("Spacebar click...");
@@ -148,7 +148,9 @@ $('body').keydown(function(e) {
             });  
         }
     }
+    console.log("Audio context(s)...", context);
 });
+
 
     function setupAudioNodes() {
 
