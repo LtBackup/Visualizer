@@ -16,10 +16,36 @@ function audioAnalyzer(audio) {
     var analyser = context.createAnalyser();
     analyser.smoothingTimeConstant = 0.3;
     analyser.fftSize = 1024;
-    source.connect(context.destination);
+    //source.connect(context.destination); /*this is necessary for gainNode to work*/
     source.connect(analyser);
+
+    var gainNode = context.createGain();
+    source.connect(gainNode);
+    gainNode.connect(context.destination);
+    
+    /* set volume to 50% loudness by default to match value set in HTML */
+    gainNode.gain.setValueAtTime(0.5, context.currentTime);
+    console.log("gainNode volume at time", gainNode.gain.value, "source is...", source);
     //var javascriptNode;
 
+    /** Sound Volume Controls */
+    var musicVolume = document.getElementById("volume");
+
+    musicVolume.addEventListener('change', function () {
+       var soundLevel = parseFloat((this.value)/100);
+        //gainNode.gain.setValueAtTime(soundLevel, context.currentTime);
+
+        //smooths out volume change, with a slight impercertile delay - prevents pops on abrupt amplifcation changes
+        gainNode.gain.setTargetAtTime(soundLevel, context.currentTime + .3, .3);
+        console.log("Volume is now..", soundLevel);
+        console.log("gain node", gainNode.gain, "soundLevel...", this.value);
+    });
+    
+      /*MSW*/
+      console.log("gainNode", gainNode);
+      console.log("gainNode value", gainNode.gain.value);  
+      console.log("volume", volume.value);
+  
     // get the context from the canvas to draw on
     var ctx = $("#canvas")[0].getContext("2d");
 
@@ -45,7 +71,7 @@ function audioAnalyzer(audio) {
     function animate() {
         (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(animate);
         fillSquares();
-        console.log(analyser);
+        //console.log(analyser);
         // stats.begin();
         // animateParticles();
         // checkVisualizer();
@@ -60,10 +86,10 @@ function audioAnalyzer(audio) {
         // get the average for the first channel
         // for (var i = 0; i < 8; i++) {
         array = new Uint8Array(analyser.frequencyBinCount);
-        console.log(array);
+        //console.log(array);
         analyser.getByteFrequencyData(array);
         averages = getAverageVolume(array);
-        console.log(averages);
+        //console.log(averages);
         // }
         // console.log(analyser);
         // console.log(splitter);
@@ -105,7 +131,7 @@ function audioAnalyzer(audio) {
         }
         return average;
     }
-    
+
 // toggle sound  with space bar
 $('body').keydown(function(e) {
     if (e.which === 32) {
@@ -193,9 +219,9 @@ $('body').keydown(function(e) {
 
     function playSound(buffer) {
         sourceNode.buffer = buffer;
-        sourceNode.start(0);
+        sourceNode.start(0);    
     }
-
+  
     // log if an error occurs
     function onError(e) {
         console.log(e);
