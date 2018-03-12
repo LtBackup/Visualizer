@@ -77,7 +77,9 @@
 
     <canvas id="canvas" style="display: block;"></canvas>
     <br/>
-    <canvas id="myCanvas" style="display: block;"></canvas>
+    <!-- <canvas id="myCanvas" style="display: block;"></canvas>
+    <br/> -->
+    <canvas id="mollyCanvas" style="display: block;"></canvas>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -104,7 +106,7 @@
     </script>
     <script src="js/logic.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
-    <script>
+    <!-- <script>
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
         renderer.setClearColor(0x00ff00);
         renderer.setPixelRatio(window.devicePixelRatio);
@@ -193,7 +195,76 @@
 
             i++;
         }
+    </script> -->
+    <script>
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mollyCanvas"), antialias: true });
+        renderer.setClearColor(0x333F47);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / innerHeight, 0.1, 3000);
+        //camera.position.set(0,0,0);
+
+        var scene = new THREE.Scene();
+
+        var light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+
+        var light1 = new THREE.PointLight(0xffffff, 0.5);
+        scene.add(light1);
+
+        var geometry = new THREE.BoxGeometry(10, 100, 10);
+        var material = new THREE.MeshNormalMaterial();
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(0, 0, -1000);
+
+        scene.add(mesh);
+
+        requestAnimationFrame(render);
+
+        var i = 0;
+        var delta = 0;
+        var bool = true;
+        var scalar = 0;
+        const startingVertices = geometry.vertices.map(e => ({ ...e }));
+        function render() {
+            if (i === geometry.vertices.length) {
+                i = 0;
+            }
+            mesh.rotation.x += 0.01;
+            mesh.rotation.y += 0.01;
+            //console.log(geometry);
+            //console.log(geometry.vertices);
+            //console.log(i);
+            //geometry.vertices[i].x = averages[i];
+            //delta += .1
+            //if (bool) {
+                //geometry.vertices[Math.floor(Math.random() * geometry.vertices.length)].x = startingVertices[i].x * averages[0] / 50;
+                // geometry.vertices[i].x = startingVertices[i].x * averages[0] / 50;
+                // geometry.vertices[i].y = startingVertices[i].y * averages[0] / 50;
+                scalar = averages[0] /50
+                mesh.scale.x = scalar; // SCALE
+                mesh.scale.y = scalar; // SCALE
+                mesh.scale.z = scalar; // SCALE
+                geometry.verticesNeedUpdate = true;
+            // }
+            // else{
+            //     mesh.scale.x = 1;
+            //     mesh.scale.y = 1;
+            //     mesh.scale.z = 1;
+            //     geometry.verticesNeedUpdate = true;
+                
+            // }
+            //bool = !bool;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+
+            i++;
+        }
+
     </script>
+
 </body>
 
 </html>
