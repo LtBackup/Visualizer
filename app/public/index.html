@@ -329,6 +329,40 @@
             meshArr2.push(mesh);
             geometryArr2.push(geometry);
         }
+  
+      /* create sphereS */
+
+        var _geometryArr = [];
+        var _meshArr = [];
+
+        var _geometry1 = new THREE.SphereGeometry(200, 100, 10);
+        var _geometry2 = new THREE.SphereGeometry(200, 100, 10);
+        var _geometry3 = new THREE.SphereGeometry(200, 100, 10);
+        var _geometry4 = new THREE.SphereGeometry(200, 100, 10);
+        var _geometry5 = new THREE.SphereGeometry(200, 100, 10);
+        geometryArr3.push(_geometry1, _geometry2, _geometry3, _geometry4, _geometry5);
+
+        var _material1 = new THREE.MeshPhysicalMaterial({ color: 0xFF0000 });
+        var _material2 = new THREE.MeshPhysicalMaterial({ color: 0x00FF00 });
+        var _material3 = new THREE.MeshPhysicalMaterial({ color: 0x0000FF });
+        var _material4 = new THREE.MeshPhysicalMaterial({ color: 0x00FFFF });
+        var _material5 = new THREE.MeshPhysicalMaterial({ color: 0x9932CC });
+        var _mesh1 = new THREE.Mesh(_geometry1, _material1);
+        var _mesh2 = new THREE.Mesh(_geometry2, _material2);
+        var _mesh3 = new THREE.Mesh(_geometry3, _material3);
+        var _mesh4 = new THREE.Mesh(_geometry4, _material4);
+        var _mesh5 = new THREE.Mesh(_geometry5, _material5);
+        meshArr3.push(_mesh1, _mesh2, _mesh3, _mesh4, _mesh5);
+        _mesh1.position.set(-1100, 0, -3000);
+        _mesh2.position.set(-500, 0, -3000);
+        _mesh3.position.set(0, 0, -3000);
+        _mesh4.position.set(500, 0, -3000);
+        _mesh5.position.set(1000, 0, -3000);
+
+        scene.add(_mesh1, _mesh2, _mesh3, _mesh4, _mesh5);
+
+
+
         hideVisuals();
         //console.log(meshArr2, "meshArr2");
         //console.log(geometryArr2, "geometryArr2");
@@ -452,14 +486,31 @@
                         geometryArr2[i].verticesNeedUpdate = true;
                     }
                     break;
-                // for (var i = 0; i < meshArrs.length; i++) {
-                //     if (i !== keypress - 1) {
-                //         for (var j = 0; j < meshArrs[i].length; j++) {
-                //             meshArrs[i][j].visible = false;
-                //         }
-                //     }
-                // }
+                case 3:
+        
+            if (i === _geometry1.vertices.length) {
+                i = 0;
+            }
+            _mesh1.rotation.x += 0.02;
+            _mesh1.rotation.y += 0.02;
+            _mesh2.rotation.z += 0.02;
+            _mesh2.rotation.y += 0.02;
 
+             var scalars = [];
+                    for (let j = 0; j < 5; j++) {
+                        scalars.push(averages[j] / 50);
+                    }
+       
+            for (let k = 0; k < meshArr3.length; k++) {
+                meshArr3[k].scale.x = scalars[k]; // SCALE
+                meshArr3[k].scale.y = scalars[k]; // SCALE
+                meshArr3[k].scale.z = scalars[k]; // SCALE
+                geometryArr3[k].verticesNeedUpdate = true;
+            }
+            
+           // directionalLight.position.set( i/50, i/50, 200 );
+      
+        
             }
             renderer.render(scene, camera);
             requestAnimationFrame(render);
