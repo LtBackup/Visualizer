@@ -21,10 +21,13 @@ $(document).ready(function() {
                     loggedIn = true;
                     name = data.username;
                     keypress = data.displayPreference;
+                    volumePref = data.volumeLevel;
+                    console.log(data.volumeLevel);
                     console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
                     $('#username').text("Welcome " + name);
                     loadVisuals(keypress);
+                    setSoundLevel(volumeLevel);
                 } else {
                     $(".error").text("Either your username or password is incorrect. Please try again!");
                     $("#existingUsername").val("");

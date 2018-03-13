@@ -230,6 +230,8 @@
         var bool = true;
         var scalar = 0;
         var keypress;
+        var input;
+        var volumePref;
 
         if (!loggedIn){
             keypress = 1;
@@ -252,6 +254,8 @@
                     break;
             }
         }
+
+
 
 
         //SET UP SCENE
@@ -388,7 +392,8 @@
             if (loggedIn){
                 let update = 
                     {username: name,
-                    displayPreference: keypress};
+                    displayPreference: keypress,
+                    volumeLevel: volume.value};
                 
                 $.ajax({
                     url: "api/existingUsers",
