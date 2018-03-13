@@ -125,7 +125,7 @@
         });
 
     </script>
-    <script src="js/logic.js" type="text/javascript"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
     <!-- <script>
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
@@ -217,19 +217,46 @@
             i++;
         }
     </script> -->
+    <script src="js/logic.js" type="text/javascript"></script>
+
     <script>
         //SET UP GLOBAL VARIABLES
-
+        var loggedIn = false;
         var mx = -500;
         var numBars = 50;
-
+        var name;
         var i = 0;
         var delta = 0;
         var bool = true;
         var scalar = 0;
+        var keypress;
+        var input;
+        var volumePref;
 
-        var keypress = 1;
-        //or server value
+        if (!loggedIn){
+            keypress = 1;
+        } 
+        
+        //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
+        function loadVisuals(keypress) {
+            switch (keypress) {
+                case 1:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 2:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 3:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 4:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+            }
+        }
+
+
+
 
         //SET UP SCENE
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
@@ -361,8 +388,23 @@
                     break;
             }
             console.log(keypress);
-            // requestAnimationFrame(render);
 
+            if (loggedIn){
+                let update = 
+                    {username: name,
+                    displayPreference: keypress,
+                    volumeLevel: volume.value};
+                
+                $.ajax({
+                    url: "api/existingUsers",
+                    type: 'PUT',
+                    dataType: 'JSON',
+                    data: update})
+                    .then(function(response) {
+                        console.log("preferences saved");
+                    });
+                }
+            
         }
 
         requestAnimationFrame(render);
@@ -381,7 +423,7 @@
                     // });
                     meshArr1[0].rotation.x += 0.02;
                     meshArr1[0].rotation.y += 0.02;
-                    console.log("running 1");
+  
 
                     var scalars = [];
                     for (let j = 0; j < 5; j++) {
@@ -494,7 +536,6 @@
 
 
     </script>
-
 </body>
 
 </html>

@@ -4,7 +4,7 @@ var Sequelize = require("sequelize");
 // sequelize (lowercase) references our connection to the DB.
 var sequelize = require("../config/connection.js");
 
-// Creates a "Chirp" model that matches up with DB
+// Creates a "User" model that matches up with DB
 var User = sequelize.define("User", {
   username: {
     type: Sequelize.STRING,
@@ -19,6 +19,16 @@ var User = sequelize.define("User", {
     validate: {
         len: [5]
     }
+  },
+  displayPreference: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1
+  },
+  volumeLevel: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 50
   }
 });
 

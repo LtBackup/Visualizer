@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  
 
   //////----------------EXISTING USER---------------//////
   $('#existingUserLogin').on("click", function(){
@@ -17,9 +18,16 @@ $(document).ready(function() {
         $.post("api/existingUsers", existingUser)
             .then(function (data) {
                 if (data){
+                    loggedIn = true;
+                    name = data.username;
+                    keypress = data.displayPreference;
+                    volumePref = data.volumeLevel;
+                    console.log(data.volumeLevel);
                     console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
-                    $('#username').text("Welcome " + data.username);
+                    $('#username').text("Welcome " + name);
+                    loadVisuals(keypress);
+                    setSoundLevel(volumeLevel);
                 } else {
                     $(".error").text("Either your username or password is incorrect. Please try again!");
                     $("#existingUsername").val("");
@@ -36,7 +44,7 @@ $(document).ready(function() {
 
       var newUser = {
         username: $("#newUsername").val().trim(),
-        password: $("#newPassword").val().trim()
+        password: $("#newPassword").val().trim(),
       };
         console.log("new user object", newUser);
 
@@ -46,6 +54,8 @@ $(document).ready(function() {
       var createUser = function(newUser){
         $.post("api/createNew", newUser, function (data){
             if (data){
+              loggedIn = true;
+              console.log("logged in", loggedIn);
               console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
             

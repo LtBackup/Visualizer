@@ -25,10 +25,25 @@ module.exports = function(app) {
         });
     });
 
+     //Route to update preferences in database
+     app.put("/api/existingUsers", function(req, res){
+        console.log(req.body);
+        User.update(
+            {displayPreference: req.body.displayPreference,
+            volumeLevel: req.body.volumeLevel},
+            {returning: true, where: 
+                {username: req.body.username}
+            }).then(function(userData) {
+                res.json(userData);
+        });
+    });
+
+
     //Route to create new user
     app.post("/api/createNew", function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
+        // var displayPreference = keypress;
 
         var uniqueUser = function (username){
             User.count({where: {username: username}
@@ -44,7 +59,10 @@ module.exports = function(app) {
                         
                         User.create({
                             username: username,
-                            password: password
+                            password: password,
+                            displayPreference: 1,
+                            volumeLevel: 50
+
                             }).then(function(userData) {
                                 console.log("new user was created");
                                 res.json(userData);
