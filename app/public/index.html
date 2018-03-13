@@ -72,19 +72,19 @@
     </div>
 
     <div class="container-fluid" id="overlay">
-            <div class="row">
-                <div class="col" id="username"></div>
-            </div>
-            <div class="row">
-                <div class="col-4">Toggle displays with keys: 1  2  3  4</div>
-                <div class="col-6"></div>
-                <div class="col-2 musicPlayer">
-                    <i class="fa fa-volume-off"></i>
-                    <input type="range" min="0" max="100" value="50" class="volumeBar" id="volume">
-                    <i class="fa fa-volume-up"></i>
-                </div>
+        <div class="row">
+            <div class="col" id="username"></div>
+        </div>
+        <div class="row">
+            <div class="col-4">Toggle displays with keys: 1 2 3 4</div>
+            <div class="col-6"></div>
+            <div class="col-2 musicPlayer">
+                <i class="fa fa-volume-off"></i>
+                <input type="range" min="0" max="100" value="50" class="volumeBar" id="volume">
+                <i class="fa fa-volume-up"></i>
             </div>
         </div>
+    </div>
 
     <div id="instructions">
         <p>Drag and drop an mp3 to play</p>
@@ -125,7 +125,7 @@
         });
 
     </script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/90/three.js"></script>
     <!-- <script>
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
@@ -233,10 +233,10 @@
         var input;
         var volumePref;
 
-        if (!loggedIn){
+        if (!loggedIn) {
             keypress = 1;
-        } 
-        
+        }
+
         //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
         function loadVisuals(keypress) {
             switch (keypress) {
@@ -329,6 +329,55 @@
             meshArr2.push(mesh);
             geometryArr2.push(geometry);
         }
+
+
+        //ice scene visual objects
+        var geometry1 = new THREE.BoxGeometry(100, 10, 200);
+        var geometry2 = new THREE.BoxGeometry(100, 10, 200);
+        var geometry3 = new THREE.BoxGeometry(100, 10, 200);
+        var geometry4 = new THREE.BoxGeometry(100, 10, 200);
+        var geometry5 = new THREE.BoxGeometry(100, 10, 200);
+        var icePlane = new THREE.PlaneGeometry(5000, 5000);
+        var caveBackground = new THREE.PlaneGeometry(8000, 8000);
+        var icicle1 = new THREE.ConeGeometry(20, 100, 15);
+        var icicle2 = new THREE.ConeGeometry(20, 150, 15);
+        var icicle3 = new THREE.ConeGeometry(20, 80, 15);
+        var icicle4 = new THREE.ConeGeometry(20, 80, 15);
+        geometryArr4.push(geometry1, geometry2, geometry3, geometry4, geometry5);
+        var flatIce = new THREE.MeshBasicMaterial({ color: 0xA5F2F3 });
+        var ice = new THREE.MeshPhongMaterial({ color: 0xA5F2F3 });
+        var background = new THREE.MeshToonMaterial({ color: 0x82CFFD })
+        var reflectIce = new THREE.MeshPhysicalMaterial({ transparent: true, opacity: .3, color: 0x000000 });
+        var mesh1 = new THREE.Mesh(geometry1, ice);
+        var mesh2 = new THREE.Mesh(geometry2, ice);
+        var mesh3 = new THREE.Mesh(geometry3, ice);
+        var mesh4 = new THREE.Mesh(geometry4, ice);
+        var mesh5 = new THREE.Mesh(geometry5, ice);
+        var mesh6 = new THREE.Mesh(icePlane, reflectIce);
+        var mesh7 = new THREE.Mesh(icicle1, ice);
+        var mesh8 = new THREE.Mesh(icicle2, ice);
+        var mesh9 = new THREE.Mesh(icicle3, ice);
+        var mesh10 = new THREE.Mesh(icicle4, ice);
+        var mesh11 = new THREE.Mesh(caveBackground, background);
+        meshArr4.push(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7, mesh8, mesh9, mesh10, mesh11);
+        mesh1.position.set(-400, -100, -1000);
+        mesh2.position.set(-200, -100, -1000);
+        mesh3.position.set(0, -100, -1000);
+        mesh4.position.set(200, -100, -1000);
+        mesh5.position.set(400, -100, -1000);
+        mesh6.position.set(0, -100, -1000);
+        mesh7.position.set(140, 100, -300);
+        mesh8.position.set(130, 100, -200);
+        mesh9.position.set(-400, -60, -600);
+        mesh10.position.set(-400, -140, -600);
+        mesh11.position.set(0, -100, -3000)
+
+        scene.add(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7, mesh8, mesh9, mesh10, mesh11);
+        mesh6.rotation.x = -Math.PI / 2;
+        mesh7.rotation.x = Math.PI;
+        mesh8.rotation.x = Math.PI;
+        mesh10.rotation.x = Math.PI;
+
         hideVisuals();
         //console.log(meshArr2, "meshArr2");
         //console.log(geometryArr2, "geometryArr2");
@@ -389,22 +438,25 @@
             }
             console.log(keypress);
 
-            if (loggedIn){
-                let update = 
-                    {username: name,
-                    displayPreference: keypress,
-                    volumeLevel: volume.value};
-                
+            if (loggedIn) {
+                let update =
+                    {
+                        username: name,
+                        displayPreference: keypress,
+                        volumeLevel: volume.value
+                    };
+
                 $.ajax({
                     url: "api/existingUsers",
                     type: 'PUT',
                     dataType: 'JSON',
-                    data: update})
-                    .then(function(response) {
+                    data: update
+                })
+                    .then(function (response) {
                         console.log("preferences saved");
                     });
-                }
-            
+            }
+
         }
 
         requestAnimationFrame(render);
@@ -423,7 +475,7 @@
                     // });
                     meshArr1[0].rotation.x += 0.02;
                     meshArr1[0].rotation.y += 0.02;
-  
+
 
                     var scalars = [];
                     for (let j = 0; j < 5; j++) {
@@ -452,18 +504,25 @@
                         geometryArr2[i].verticesNeedUpdate = true;
                     }
                     break;
-                // for (var i = 0; i < meshArrs.length; i++) {
-                //     if (i !== keypress - 1) {
-                //         for (var j = 0; j < meshArrs[i].length; j++) {
-                //             meshArrs[i][j].visible = false;
-                //         }
-                //     }
-                // }
+
+                case 3:
+                    break;
+                case 4:
+
+                    var scalars = [];
+                    for (let j = 0; j < 5; j++) {
+                        scalars.push(averages[j] / 4);
+                    }
+
+                    for (let k = 0; k < 5; k++) {
+                        meshArr4[k].scale.y = scalars[k]; // SCALE
+                        geometryArr4[k].verticesNeedUpdate = true;
+                    }
+                    break;
 
             }
             renderer.render(scene, camera);
             requestAnimationFrame(render);
-
         }
 
 
