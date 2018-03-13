@@ -19,6 +19,7 @@ $(document).ready(function() {
                 if (data){
                     console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
+                    $('#username').text("Welcome " + data.username);
                 } else {
                     $(".error").text("Either your username or password is incorrect. Please try again!");
                     $("#existingUsername").val("");

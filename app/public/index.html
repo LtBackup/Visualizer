@@ -71,22 +71,35 @@
         </div>
     </div>
 
+    <div class="container-fluid" id="overlay">
+            <div class="row">
+                <div class="col" id="username"></div>
+            </div>
+            <div class="row">
+                <div class="col-4">Toggle displays with keys: 1  2  3  4</div>
+                <div class="col-6"></div>
+                <div class="col-2 musicPlayer">
+                    <i class="fa fa-volume-off"></i>
+                    <input type="range" min="0" max="100" value="50" class="volumeBar" id="volume">
+                    <i class="fa fa-volume-up"></i>
+                </div>
+            </div>
+        </div>
+
     <div id="instructions">
         <p>Drag and drop an mp3 to play</p>
         <p>(press 'K' to hide keyboard controls)</p>
     </div>
 
-    <div class="col-md-2 musicPlayer overlay">
+    <!-- <div class="col-md-2 musicPlayer overlay">
         <i class="fa fa-volume-off"></i>
         <input type="range" min="0" max="100" value="50" class="volumeBar" id="volume">
         <i class="fa fa-volume-up"></i>
-    </div>
+    </div> -->
 
     <canvas id="canvas" style="display: block;"></canvas>
     <br/>
     <canvas id="myCanvas" style="display: block;"></canvas>
-    <br/>
-    <canvas id="mollyCanvas" style="display: block;"></canvas>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -276,7 +289,7 @@
         //creates stuff for bars
         for (var i = 0; i < numBars; i++) {
             var y = Math.floor((Math.random() * 300) + 100);
-            var geometry = new THREE.BoxGeometry(10, y, 10);
+            var geometry = new THREE.BoxGeometry(10, y, 5);
 
             var material = new THREE.MeshNormalMaterial();
 
@@ -342,6 +355,9 @@
                     meshArrs[keypress - 1].forEach(e => e.visible = true);
                     //clearScene();
                     //createBars();
+                    break;
+                case 75:
+                    $('#overlay').toggle();
                     break;
             }
             console.log(keypress);
@@ -474,6 +490,8 @@
         //     }
         // }
         document.addEventListener('keydown', setKeypress);
+
+
 
     </script>
 

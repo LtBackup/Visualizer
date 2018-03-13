@@ -15,6 +15,13 @@ body {
     color: red;
 }
 
+#overlay {
+    font-size: 1em;
+    color: white;
+    position: absolute;
+    margin-top: 2em;
+}
+
 #instructions {
     margin: 0;
     font-size: 2em;
@@ -27,14 +34,14 @@ body {
 }
 
 /*  Music Player CSS below -------------taken from CannonMan-----------------------*/
-.musicPlayer {
+/* .musicPlayer {
     position: relative;
     font-size: 22px;
     color: white;
     margin-top: 28px;
     width: 150px;
 }
-.overlay { position:absolute; top:5px; right:10px; }
+.overlay { position:absolute; top:5px; right:10px; } */
 .volumeBar {
     -webkit-appearance: none;
     width: 82px !important;
