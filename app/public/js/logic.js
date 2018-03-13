@@ -19,9 +19,12 @@ $(document).ready(function() {
             .then(function (data) {
                 if (data){
                     loggedIn = true;
+                    name = data.username;
+                    keypress = data.displayPreference;
                     console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
-                    $('#username').text("Welcome " + data.username);
+                    $('#username').text("Welcome " + name);
+                    loadVisuals(keypress);
                 } else {
                     $(".error").text("Either your username or password is incorrect. Please try again!");
                     $("#existingUsername").val("");

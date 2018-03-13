@@ -25,6 +25,18 @@ module.exports = function(app) {
         });
     });
 
+     //Route to update preferences in database
+     app.put("/api/existingUsers", function(req, res){
+
+        User.update(
+            {displayPreference: req.body.displayPreference},
+            {returning: true, where: 
+                {username: req.body.username}
+            }).then(function(userData) {
+                res.json(userData);
+        });
+    });
+
     //Route to create new user
     app.post("/api/createNew", function(req, res) {
         var username = req.body.username;

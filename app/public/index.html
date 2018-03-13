@@ -217,19 +217,42 @@
             i++;
         }
     </script> -->
+    <script src="js/logic.js" type="text/javascript"></script>
+
     <script>
         //SET UP GLOBAL VARIABLES
         var loggedIn = false;
         var mx = -500;
         var numBars = 50;
-
+        var name;
         var i = 0;
         var delta = 0;
         var bool = true;
         var scalar = 0;
+        var keypress;
 
-        var keypress = 1;
-        //or server value
+        if (!loggedIn){
+            keypress = 1;
+        } 
+        
+        //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
+        function loadVisuals(keypress) {
+            switch (keypress) {
+                case 1:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 2:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 3:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+                case 4:
+                    meshArrs[keypress - 1].forEach(e => e.visible = true);
+                    break;
+            }
+        }
+
 
         //SET UP SCENE
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas"), antialias: true });
@@ -362,16 +385,21 @@
             }
             console.log(keypress);
 
-        //     if (loggedIn){
-        //         $.ajax({
-        //             url: "api/existingUsers",
-        //             type: 'PUT',
-        //             success: function(response) {
-        //                 console.log("preferences saved");
-        //                 keypress = response.userPreference;
-        //             }
-        //         });
-        //     }
+            if (loggedIn){
+                let update = 
+                    {username: name,
+                    displayPreference: keypress};
+                
+                $.ajax({
+                    url: "api/existingUsers",
+                    type: 'PUT',
+                    dataType: 'JSON',
+                    data: update})
+                    .then(function(response) {
+                        console.log("preferences saved");
+                    });
+                }
+            
         }
 
         requestAnimationFrame(render);
@@ -503,7 +531,6 @@
 
 
     </script>
-    <script src="js/logic.js" type="text/javascript"></script>
 </body>
 
 </html>
