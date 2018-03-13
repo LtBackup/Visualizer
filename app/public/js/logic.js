@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  
 
   //////----------------EXISTING USER---------------//////
   $('#existingUserLogin').on("click", function(){
@@ -17,6 +18,7 @@ $(document).ready(function() {
         $.post("api/existingUsers", existingUser)
             .then(function (data) {
                 if (data){
+                    loggedIn = true;
                     console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
                     $('#username').text("Welcome " + data.username);
@@ -36,7 +38,7 @@ $(document).ready(function() {
 
       var newUser = {
         username: $("#newUsername").val().trim(),
-        password: $("#newPassword").val().trim()
+        password: $("#newPassword").val().trim(),
       };
         console.log("new user object", newUser);
 
@@ -46,6 +48,8 @@ $(document).ready(function() {
       var createUser = function(newUser){
         $.post("api/createNew", newUser, function (data){
             if (data){
+              loggedIn = true;
+              console.log("logged in", loggedIn);
               console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
             
