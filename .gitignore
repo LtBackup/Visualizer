@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+testing/mattHTML.html
+testing/mattHTML.html
+testing/mattScene.js
