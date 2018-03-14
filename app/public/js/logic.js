@@ -2,7 +2,7 @@ $(document).ready(function() {
   
 
   //////----------------EXISTING USER---------------//////
-  $('#existingUserLogin').on("click", function(){
+  $('#existingUserLogin').on("submit", function(){
     event.preventDefault();
 
     var existingUser = {
@@ -12,12 +12,6 @@ $(document).ready(function() {
     console.log("existing user object sent to server", existingUser);
     
     validateUser(existingUser);
-  });
-
-  $("#existingPassword").keyup(function(event) {
-    if (event.keyCode === 13) {
-        $("#existingUserLogin").click();
-    }
   });
 
     var validateUser = function (existingUser){
@@ -45,7 +39,7 @@ $(document).ready(function() {
 
 
   //////----------------NEW USER---------------//////
-    $("#newUserLogin").on("click", function() {
+    $("#newUserLogin").on("submit", function() {
       event.preventDefault();
 
       var newUser = {
@@ -55,12 +49,6 @@ $(document).ready(function() {
         console.log("new user object", newUser);
 
         createUser(newUser);
-    });
-
-    $("#newPassword").keyup(function(event) {
-      if (event.keyCode === 13) {
-          $("#newUserLogin").click();
-      }
     });
 
       var createUser = function(newUser){
