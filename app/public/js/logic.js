@@ -2,7 +2,7 @@ $(document).ready(function() {
   
 
   //////----------------EXISTING USER---------------//////
-  $('#existingUserLogin').on("click", function(){
+  $('#existingUserLogin').on("submit", function(){
     event.preventDefault();
 
     var existingUser = {
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 
   //////----------------NEW USER---------------//////
-    $("#newUserLogin").on("click", function() {
+    $("#newUserLogin").on("submit", function() {
       event.preventDefault();
 
       var newUser = {
@@ -55,9 +55,11 @@ $(document).ready(function() {
         $.post("api/createNew", newUser, function (data){
             if (data){
               loggedIn = true;
+              name = data.username;
               console.log("logged in", loggedIn);
               console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
+              $('#username').text("Welcome " + name);
             
             } else {
               console.log("user already exists with that name");
