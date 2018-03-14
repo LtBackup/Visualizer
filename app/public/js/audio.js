@@ -366,7 +366,7 @@ function getAverageVolume(array) {
 
       if ((i + 1) % (array.length / split) === 0) {
         average[(i + 1) / (array.length / split) - 1] =
-          values / (array.length / split) / 200 * canvas.height;
+          values / (array.length / split) / 7000 * canvas.height;
         values = 0;
       }
     }
