@@ -14,6 +14,12 @@ $(document).ready(function() {
     validateUser(existingUser);
   });
 
+  $("#existingPassword").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#existingUserLogin").click();
+    }
+  });
+
     var validateUser = function (existingUser){
         $.post("api/existingUsers", existingUser)
             .then(function (data) {
@@ -51,13 +57,21 @@ $(document).ready(function() {
         createUser(newUser);
     });
 
+    $("#newPassword").keyup(function(event) {
+      if (event.keyCode === 13) {
+          $("#newUserLogin").click();
+      }
+    });
+
       var createUser = function(newUser){
         $.post("api/createNew", newUser, function (data){
             if (data){
               loggedIn = true;
+              name = data.username;
               console.log("logged in", loggedIn);
               console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
+              $('#username').text("Welcome " + name);
             
             } else {
               console.log("user already exists with that name");
