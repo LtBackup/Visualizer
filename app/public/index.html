@@ -98,8 +98,7 @@
     </div> -->
 
     <canvas id="canvas" style="display: block;"></canvas>
-    <br/>
-    <!-- <canvas id="myCanvas" style="display: block;"></canvas> -->
+    <canvas id="myCanvas" style="display: block;">
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -232,159 +231,158 @@
         var keypress;
         var input;
         var volumePref;
-    
-    //SET UP AUDIO BITS
-    var averages = [];
 
-function audioAnalyzer(audio) {
-  // create the audio context (chrome only for now)
-  // create the audio context (chrome only for now)
-  if (!window.AudioContext) {
-    if (!window.webkitAudioContext) {
-      alert("no audiocontext found");
-    }
-    window.AudioContext = window.webkitAudioContext;
-  }
-  context = new (window.AudioContext || window.webkitAudioContext)();
-  source = context.createMediaElementSource(audio);
-  console.log("Source", source);
-  //var audioBuffer;
-  //var sourceNode;
-  //var splitter;
-  analyser = context.createAnalyser();
-  analyser.smoothingTimeConstant = 0.3;
-  analyser.fftSize = 1024;
-  //source.connect(context.destination); /*this is necessary for gainNode to work*/
-  source.connect(analyser);
+        //SET UP AUDIO BITS
+        var averages = [];
 
-  var gainNode = context.createGain();
-  source.connect(gainNode);
-  gainNode.connect(context.destination);
-  var musicVolume = document.getElementById("volume");
-  /* set volume to 50% loudness by default to match value set in HTML */
-  if (loggedIn) {
-    gainNode.gain.setValueAtTime(volumePref / 100, context.currentTime);
-    musicVolume.value = volumePref;
-  } else {
-    gainNode.gain.setValueAtTime(0.5, context.currentTime);
-  }
-  //might need to set the slider to user value
-  console.log(
-    "gainNode volume at time",
-    gainNode.gain.value,
-    "source is...",
-    source
-  );
-  //var javascriptNode;
-  /** Sound Volume Controls */
-  musicVolume.addEventListener("change", function() {
-    var soundLevel = parseFloat(this.value / 100);
-    //gainNode.gain.setValueAtTime(soundLevel, context.currentTime);
-    //smooths out volume change, with a slight impercertile delay - prevents pops on abrupt amplifcation changes
-    gainNode.gain.setTargetAtTime(soundLevel, context.currentTime + 0.3, 0.3);
-    console.log("Volume is now..", soundLevel);
-    console.log("gain node", gainNode.gain, "soundLevel...", this.value);
-    let updateVol = {
-      username: name,
-      displayPreference: keypress,
-      volumeLevel: volume.value
-    };
+        function audioAnalyzer(audio) {
+            // create the audio context (chrome only for now)
+            // create the audio context (chrome only for now)
+            if (!window.AudioContext) {
+                if (!window.webkitAudioContext) {
+                    alert("no audiocontext found");
+                }
+                window.AudioContext = window.webkitAudioContext;
+            }
+            context = new (window.AudioContext || window.webkitAudioContext)();
+            source = context.createMediaElementSource(audio);
+            console.log("Source", source);
+            //var audioBuffer;
+            //var sourceNode;
+            //var splitter;
+            analyser = context.createAnalyser();
+            analyser.smoothingTimeConstant = 0.3;
+            analyser.fftSize = 1024;
+            //source.connect(context.destination); /*this is necessary for gainNode to work*/
+            source.connect(analyser);
 
-    $.ajax({
-      url: "api/existingUsers",
-      type: "PUT",
-      dataType: "JSON",
-      data: updateVol
-    }).then(function(response) {
-      console.log("volume saved");
-    });
-  });
+            var gainNode = context.createGain();
+            source.connect(gainNode);
+            gainNode.connect(context.destination);
+            var musicVolume = document.getElementById("volume");
+            /* set volume to 50% loudness by default to match value set in HTML */
+            if (loggedIn) {
+                gainNode.gain.setValueAtTime(volumePref / 100, context.currentTime);
+                musicVolume.value = volumePref;
+            } else {
+                gainNode.gain.setValueAtTime(0.5, context.currentTime);
+            }
+            //might need to set the slider to user value
+            console.log(
+                "gainNode volume at time",
+                gainNode.gain.value,
+                "source is...",
+                source
+            );
+            //var javascriptNode;
+            /** Sound Volume Controls */
+            musicVolume.addEventListener("change", function () {
+                var soundLevel = parseFloat(this.value / 100);
+                //gainNode.gain.setValueAtTime(soundLevel, context.currentTime);
+                //smooths out volume change, with a slight impercertile delay - prevents pops on abrupt amplifcation changes
+                gainNode.gain.setTargetAtTime(soundLevel, context.currentTime + 0.3, 0.3);
+                console.log("Volume is now..", soundLevel);
+                console.log("gain node", gainNode.gain, "soundLevel...", this.value);
+                let updateVol = {
+                    username: name,
+                    displayPreference: keypress,
+                    volumeLevel: volume.value
+                };
 
-  /*MSW*/
-  console.log("gainNode", gainNode);
-  console.log("gainNode value", gainNode.gain.value);
-  console.log("volume", volume.value);
-  
-//   var array = [];
-//     // get the average for the first channel
-//     // for (var i = 0; i < 8; i++) {
-//     array = new Uint8Array(analyser.frequencyBinCount);
-//     //console.log(array);
-//     analyser.getByteFrequencyData(array);
-//     averages = getAverageVolume(array);
+                $.ajax({
+                    url: "api/existingUsers",
+                    type: "PUT",
+                    dataType: "JSON",
+                    data: updateVol
+                }).then(function (response) {
+                    console.log("volume saved");
+                });
+            });
 
- $("body")
-    .off("keydown")
-    .keydown(function(e) {
-      if (e.which === 32) {
-        console.log("context.state", context.state);
-        console.log("Spacebar click...");
-        if (context.state === "running") {
-          context.suspend().then(function() {
-            $("#status")
-              .html("Suspend music...")
-              .fadeOut(2000);
-          });
-        } else if (context.state === "suspended") {
-          context.resume().then(function() {
-            $("#status")
-              .html("Resume music...")
-              .fadeOut(2000);
-          });
+            /*MSW*/
+            console.log("gainNode", gainNode);
+            console.log("gainNode value", gainNode.gain.value);
+            console.log("volume", volume.value);
+
+            //   var array = [];
+            //     // get the average for the first channel
+            //     // for (var i = 0; i < 8; i++) {
+            //     array = new Uint8Array(analyser.frequencyBinCount);
+            //     //console.log(array);
+            //     analyser.getByteFrequencyData(array);
+            //     averages = getAverageVolume(array);
+
+            $("body")
+                .off("keydown")
+                .keydown(function (e) {
+                    if (e.which === 32) {
+                        console.log("context.state", context.state);
+                        console.log("Spacebar click...");
+                        if (context.state === "running") {
+                            context.suspend().then(function () {
+                                $("#status")
+                                    .html("Suspend music...")
+                                    .fadeOut(2000);
+                            });
+                        } else if (context.state === "suspended") {
+                            context.resume().then(function () {
+                                $("#status")
+                                    .html("Resume music...")
+                                    .fadeOut(2000);
+                            });
+                        }
+                    }
+                    //console.log("Audio context(s)...", context);
+                });
+
+            function loadSound(url) {
+                var request = new XMLHttpRequest();
+                request.open("GET", url, true);
+                request.responseType = "arraybuffer";
+
+                // When loaded decode the data
+                request.onload = function () {
+                    // decode the data
+                    //context.decodeAudioData(request.response, function (buffer) {
+                    // when the audio is decoded play the sound
+                    //playSound(buffer);
+                    //}, onError);
+                };
+                request.send();
+            }
+
+            function playSound(buffer) {
+                sourceNode.buffer = buffer;
+                sourceNode.start(0);
+            }
+
+            // log if an error occurs
+            function onError(e) {
+                console.log(e);
+            }
+
+            animate();
         }
-      }
-      //console.log("Audio context(s)...", context);
-    });
 
-     function loadSound(url) {
-    var request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.responseType = "arraybuffer";
+        function getAverageVolume(array) {
+            var values = 0;
+            var split = 8;
+            var average = [];
+            // var length = array.length;
 
-    // When loaded decode the data
-    request.onload = function() {
-      // decode the data
-      //context.decodeAudioData(request.response, function (buffer) {
-      // when the audio is decoded play the sound
-      //playSound(buffer);
-      //}, onError);
-    };
-    request.send();
-  }
+            // get all the frequency amplitudes
+            for (var i = 0; i < array.length; i++) {
+                values += array[i];
+                //console.log(array[i]);
 
-  function playSound(buffer) {
-    sourceNode.buffer = buffer;
-    sourceNode.start(0);
-  }
-
-  // log if an error occurs
-  function onError(e) {
-    console.log(e);
-  }
-
-  animate();
-}
-
-function getAverageVolume(array) {
-    var values = 0;
-    var split = 8;
-    var average = [];
-    console.log("Getting average volume");
-    // var length = array.length;
-
-    // get all the frequency amplitudes
-    for (var i = 0; i < array.length; i++) {
-      values += array[i];
-      //console.log(array[i]);
-
-      if ((i + 1) % (array.length / split) === 0) {
-        average[(i + 1) / (array.length / split) - 1] =
-          values / (array.length / split) / 200 * canvas.height;
-        values = 0;
-      }
-    }
-    return average;
-  }
+                if ((i + 1) % (array.length / split) === 0) {
+                    average[(i + 1) / (array.length / split) - 1] =
+                        values / (array.length / split) / 6000 * canvas.height;
+                    values = 0;
+                }
+            }
+            return average;
+        }
 
 
         if (!loggedIn) {
@@ -418,7 +416,7 @@ function getAverageVolume(array) {
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / innerHeight, 0.1, 3000);
+        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / innerHeight, 0.1, 4000);
         // camera.position.set(0, 20, 100);
 
         var scene = new THREE.Scene();
@@ -588,7 +586,7 @@ function getAverageVolume(array) {
         //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
         function setKeypress(e) {
             if (e.which >= 49 && e.which <= 52) {
-                console.log("hiding");
+                //console.log("hiding");
                 meshArrs[keypress - 1].forEach(e => e.visible = false);
             }
             switch (e.which) {
@@ -620,7 +618,7 @@ function getAverageVolume(array) {
                     $('#overlay').toggle();
                     break;
             }
-            console.log(keypress);
+            //console.log(keypress);
 
             if (loggedIn) {
                 let update =
@@ -643,20 +641,20 @@ function getAverageVolume(array) {
 
         }
 
-    function animate() {
-        (window.requestAnimationFrame || window.webkitRequestAnimationFrame) 
-        (animate);
+        function animate() {
+            (window.requestAnimationFrame || window.webkitRequestAnimationFrame)
+                (animate);
             var array = [];
             // get the average for the first channel
             // for (var i = 0; i < 8; i++) {
             array = new Uint8Array(analyser.frequencyBinCount);
-            console.log('array');
+            //console.log('array');
             //console.log(array);
             analyser.getByteFrequencyData(array);
             averages = getAverageVolume(array);
         }
 
-        
+
         requestAnimationFrame(render);
 
         function render() {
@@ -808,7 +806,20 @@ function getAverageVolume(array) {
         //         //i++;
         //     }
         // }
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+        }
+
+
         document.addEventListener('keydown', setKeypress);
+
+        window.addEventListener('resize', onWindowResize, false);
 
 
 
