@@ -377,7 +377,7 @@
 
                 if ((i + 1) % (array.length / split) === 0) {
                     average[(i + 1) / (array.length / split) - 1] =
-                        values / (array.length / split) / 6000 * canvas.height;
+                        values / (array.length / split) / 2000 * canvas.height;
                     values = 0;
                 }
             }
@@ -416,7 +416,7 @@
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / innerHeight, 0.1, 4000);
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
         // camera.position.set(0, 20, 100);
 
         var scene = new THREE.Scene();
