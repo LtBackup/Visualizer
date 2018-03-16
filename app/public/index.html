@@ -488,34 +488,50 @@
 
         /* create sphereS */
 
-        var _geometryArr = [];
-        var _meshArr = [];
+        var sphereArr = [];
+        var sphereMeshArr = [];
 
-        var _geometry1 = new THREE.SphereGeometry(200, 100, 10);
-        var _geometry2 = new THREE.SphereGeometry(200, 100, 10);
-        var _geometry3 = new THREE.SphereGeometry(200, 100, 10);
-        var _geometry4 = new THREE.SphereGeometry(200, 100, 10);
-        var _geometry5 = new THREE.SphereGeometry(200, 100, 10);
-        geometryArr3.push(_geometry1, _geometry2, _geometry3, _geometry4, _geometry5);
+        var sphere1 = new THREE.SphereGeometry(200, 100, 10);
+        var sphere2 = new THREE.SphereGeometry(200, 100, 10);
+        var sphere3 = new THREE.SphereGeometry(200, 100, 10);
+        var sphere4 = new THREE.SphereGeometry(200, 100, 10);
+        var sphere5 = new THREE.SphereGeometry(200, 100, 10);
+        geometryArr3.push(sphere1, sphere2, sphere3, sphere4, sphere5);
 
-        var _material1 = new THREE.MeshPhysicalMaterial({ color: 0xFF0000 });
-        var _material2 = new THREE.MeshPhysicalMaterial({ color: 0x00FF00 });
-        var _material3 = new THREE.MeshPhysicalMaterial({ color: 0x0000FF });
-        var _material4 = new THREE.MeshPhysicalMaterial({ color: 0x00FFFF });
-        var _material5 = new THREE.MeshPhysicalMaterial({ color: 0x9932CC });
-        var _mesh1 = new THREE.Mesh(_geometry1, _material1);
-        var _mesh2 = new THREE.Mesh(_geometry2, _material2);
-        var _mesh3 = new THREE.Mesh(_geometry3, _material3);
-        var _mesh4 = new THREE.Mesh(_geometry4, _material4);
-        var _mesh5 = new THREE.Mesh(_geometry5, _material5);
-        meshArr3.push(_mesh1, _mesh2, _mesh3, _mesh4, _mesh5);
-        _mesh1.position.set(-1100, 0, -3000);
-        _mesh2.position.set(-500, 0, -3000);
-        _mesh3.position.set(0, 0, -3000);
-        _mesh4.position.set(500, 0, -3000);
-        _mesh5.position.set(1000, 0, -3000);
+        var sphereMaterial1 = new THREE.MeshPhysicalMaterial({ color: 0xFF0000 });
+        var sphereMaterial2 = new THREE.MeshPhysicalMaterial({ color: 0x00FF00 });
+        var sphereMaterial3 = new THREE.MeshPhysicalMaterial({ color: 0x0000FF });
+        var sphereMaterial4 = new THREE.MeshPhysicalMaterial({ color: 0x00FFFF });
+        var sphereMaterial5 = new THREE.MeshPhysicalMaterial({ color: 0x9932CC });
+        var sphereMesh1 = new THREE.Mesh(sphere1, sphereMaterial1);
+        var sphereMesh2 = new THREE.Mesh(sphere2, sphereMaterial2);
+        var sphereMesh3 = new THREE.Mesh(sphere3, sphereMaterial3);
+        var sphereMesh4 = new THREE.Mesh(sphere4, sphereMaterial4);
+        var sphereMesh5 = new THREE.Mesh(sphere5, sphereMaterial5);
+        var spherePlane= new THREE.PlaneBufferGeometry(8000, 8000);
+        var _material= new THREE.MeshToonMaterial({ color: 0xFFFFFF })
+ 
+        meshArr3.push(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5);
 
-        scene.add(_mesh1, _mesh2, _mesh3, _mesh4, _mesh5);
+        sphereMesh1.position.set(-1100, 0, -3000);
+        sphereMesh2.position.set(-500, 0, -3000);
+        sphereMesh3.position.set(0, 0, -3000);
+        sphereMesh4.position.set(500, 0, -3000);
+        sphereMesh5.position.set(1000, 0, -3000);
+        // sphereMesh6.position.set(0, -100, -3000);
+        
+        var groundMaterial = new THREE.MeshPhongMaterial({
+             shininess: 80,
+            color: 0xffffff,
+            specular: 0xffffff
+        
+                });
+        var ground = new THREE.Mesh(spherePlane, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.set( 0, 0, 0 );
+        ground.scale.set( 1000, 1000, 1000 );
+        ground.receiveShadow = true;
+        scene.add(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5, ground);
 
         //ice scene visual objects
         var geometry1 = new THREE.BoxGeometry(100, 10, 200);
@@ -703,13 +719,13 @@
                     break;
 
                 case 3:
-                    if (i === _geometry1.vertices.length) {
+                    if (i === sphere1.vertices.length) {
                         i = 0;
                     }
-                    _mesh1.rotation.x += 0.02;
-                    _mesh1.rotation.y += 0.02;
-                    _mesh2.rotation.z += 0.02;
-                    _mesh2.rotation.y += 0.02;
+                    sphereMesh1.rotation.x += 0.02;
+                    sphereMesh1.rotation.y += 0.02;
+                    sphereMesh2.rotation.z += 0.02;
+                    sphereMesh2.rotation.y += 0.02;
 
                     var scalars = [];
                     for (let j = 0; j < 5; j++) {
