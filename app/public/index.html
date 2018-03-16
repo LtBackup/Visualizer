@@ -102,7 +102,7 @@
     </div> -->
 
     <canvas id="canvas" style="display: block;"></canvas>
-    <canvas id="myCanvas" style="display: block;">
+    <!-- <canvas id="myCanvas" style="display: block;"> -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -435,39 +435,59 @@
         var meshArr2 = [];
         var meshArr3 = [];
         var meshArr4 = [];
+        var meshArr5 = [];
         var geometryArr1 = [];
         var geometryArr2 = [];
         var geometryArr3 = [];
         var geometryArr4 = [];
+        var geometryArr5 = [];
 
-        var meshArrs = [meshArr1, meshArr2, meshArr3, meshArr4];
-        var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4];
+        var meshArrs = [meshArr1, meshArr2, meshArr3, meshArr4, meshArr5];
+        var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4, geometryArr5];
 
         //creates stuff for cubes
-        var geometry1 = new THREE.BoxGeometry(100, 100, 100);
-        var geometry2 = new THREE.BoxGeometry(100, 100, 100);
-        var geometry3 = new THREE.BoxGeometry(100, 100, 100);
-        var geometry4 = new THREE.BoxGeometry(100, 100, 100);
-        var geometry5 = new THREE.BoxGeometry(100, 100, 100);
-        geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
+        // var geometry1 = new THREE.BoxGeometry(100, 100, 100);
+        // var geometry2 = new THREE.BoxGeometry(100, 100, 100);
+        // var geometry3 = new THREE.BoxGeometry(100, 100, 100);
+        // var geometry4 = new THREE.BoxGeometry(100, 100, 100);
+        // var geometry5 = new THREE.BoxGeometry(100, 100, 100);
+        // var geometry = new THREE.BoxGeometry(100, 100, 100);
+        var waveFunc = function(u, v){
+            var x = -100 + 200 * v;
+            //var x = canvas.innerWidth;
+            //var y = Math.pow(Math.sin(u * Math.PI / 2),v);
+            var y = Math.sin(u * Math.PI) + Math.sin(v * Math.PI) * 60;
+            var z = -100 + 200 * v;
+            console.log("making wave");
+            return new THREE.Vector3(x,y,z);
+            
+        }
+        //goto
+        var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
+        geometry.scale.y = 50;
+        geometryArr1.push(geometry);
+        //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
         //console.log(geometryArr1, "geometryArr1");
-
-        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2 });
-        var mesh1 = new THREE.Mesh(geometry1, material);
-        var mesh2 = new THREE.Mesh(geometry2, material);
-        var mesh3 = new THREE.Mesh(geometry3, material);
-        var mesh4 = new THREE.Mesh(geometry4, material);
-        var mesh5 = new THREE.Mesh(geometry5, material);
-        meshArr1.push(mesh1, mesh2, mesh3, mesh4, mesh5);
+        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(0, 0, -1000);
+        meshArr1.push(mesh);
+        // var mesh1 = new THREE.Mesh(geometry1, material);
+        // var mesh2 = new THREE.Mesh(geometry2, material);
+        // var mesh3 = new THREE.Mesh(geometry3, material);
+        // var mesh4 = new THREE.Mesh(geometry4, material);
+        // var mesh5 = new THREE.Mesh(geometry5, material);
+        // meshArr1.push(mesh1, mesh2, mesh3, mesh4, mesh5);
         //console.log(meshArr1, "meshArr1");
 
-        mesh1.position.set(0, 0, -1000);
-        mesh2.position.set(500, 250, -1000);
-        mesh3.position.set(500, -250, -1000);
-        mesh4.position.set(-500, -250, -1000);
-        mesh5.position.set(-500, 250, -1000);
+        // mesh1.position.set(0, 0, -1000);
+        // mesh2.position.set(500, 250, -1000);
+        // mesh3.position.set(500, -250, -1000);
+        // mesh4.position.set(-500, -250, -1000);
+        // mesh5.position.set(-500, 250, -1000);
 
-        scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
+        //scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
+        scene.add(mesh);
 
         //creates stuff for bars
         for (var i = 0; i < numBars; i++) {
@@ -667,22 +687,33 @@
             //function render() {
             switch (keypress) {
                 case 1:
-                    // meshArr1.forEach(element => {
-                    //     element.visible = true;
-                    // });
-                    meshArr1[0].rotation.x += 0.02;
-                    meshArr1[0].rotation.y += 0.02;
+                    meshArr1.forEach(element => {
+                        element.visible = true;
+                    });
+                    // meshArr1[0].rotation.x += 0.02;
+                    // meshArr1[0].rotation.y += 0.02;
 
 
-                    var scalars = [];
-                    for (let j = 0; j < 5; j++) {
-                        scalars.push(averages[j] / 50);
-                    }
+                    // var scalars = [];
+                    // for (let j = 0; j < 5; j++) {
+                    //     scalars.push(averages[j] / 50);
+                    // }
+        var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
+        geometry.scale.y = 50;
+        geometryArr1.push(geometry);
+        //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
+        //console.log(geometryArr1, "geometryArr1");
+        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(0, -100, -500);
+        meshArr1.push(mesh);
+        scene.add(mesh);
 
                     for (let k = 0; k < meshArr1.length; k++) {
-                        meshArr1[k].scale.x = scalars[k]; // SCALE
-                        meshArr1[k].scale.y = scalars[k]; // SCALE
-                        meshArr1[k].scale.z = scalars[k]; // SCALE
+                        meshArr1[k].position.z += 10; // SCALE
+                        //meshArr1[k].rotation.y += .01;
+                    //     meshArr1[k].scale.y = scalars[k]; // SCALE
+                    //     meshArr1[k].scale.z = scalars[k]; // SCALE
                         geometryArr1[k].verticesNeedUpdate = true;
                     }
                     break;
