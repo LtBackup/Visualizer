@@ -19,6 +19,7 @@ $(document).ready(function() {
             .then(function (data) {
                 if (data){
                     loggedIn = true;
+                    isAnimating = true;
                     name = data.username;
                     keypress = data.displayPreference;
                     volumePref = data.volumeLevel;
@@ -27,7 +28,6 @@ $(document).ready(function() {
                     $('#existingUserModal').modal('hide');
                     $('#username').text("Welcome " + name);
                     loadVisuals(keypress);
-                    setSoundLevel(volumeLevel);
                 } else {
                     $(".error").text("Either your username or password is incorrect. Please try again!");
                     $("#existingUsername").val("");
@@ -55,7 +55,10 @@ $(document).ready(function() {
         $.post("api/createNew", newUser, function (data){
             if (data){
               loggedIn = true;
+              isAnimating = true;
               name = data.username;
+              keypress = data.displayPreference;
+              volumePref = data.volumeLevel;
               console.log("logged in", loggedIn);
               console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
