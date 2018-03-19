@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="modal fade" id="newUserModal">
+    <div class="modal fade" id="newUserModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="existingUserModal">
+    <div class="modal fade" id="existingUserModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -146,11 +146,10 @@
         var input;
         var volumePref;
         var isAnimating = false;
-       
 
-        if (!loggedIn) {
-            keypress = 1;
-        }
+        // if (!loggedIn) {
+        //     keypress = 1;
+        // }
 
         //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
         function loadVisuals(keypress) {
@@ -169,9 +168,6 @@
                     break;
             }
         }
-
-
-
 
         //SET UP SCENE
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("canvas"), antialias: true });
