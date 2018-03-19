@@ -467,7 +467,7 @@
         //goto
         //var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
         //geometry.scale.y = 50;
-        var geometry = new THREE.SphereGeometry(3000);
+        var geometry = new THREE.IcosahedronGeometry(2000);
         var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
         var planeGeometry = new THREE.PlaneGeometry(6000, 6000, 50, 50);
         geometryArr1.push(geometry, planeGeometry);
@@ -475,13 +475,13 @@
         //console.log(geometryArr1, "geometryArr1");
 
 
-        var material = new THREE.MeshPhysicalMaterial({ color: 0x00FF00, wireframe: false, side: THREE.DoubleSide });
+        var material = new THREE.MeshStandardMaterial({ color: 0xa200ff, wireframe: true, side: THREE.DoubleSide });
         var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
-        var sphere = new THREE.Mesh(geometry, normalMaterial);
+        var shape = new THREE.Mesh(geometry, normalMaterial);
         var plane = new THREE.Mesh(planeGeometry, material);
-        meshArr1.push(sphere, plane);
-        plane.position.set(0, -200, 0);
-        sphere.position.set(0, 0, 0);
+        meshArr1.push(shape, plane);
+        plane.position.set(0, -150, 0);
+        shape.position.set(0, 0, 0);
         plane.rotation.x += -Math.PI / 2;
         // var mesh1 = new THREE.Mesh(geometry1, material);
         // var mesh2 = new THREE.Mesh(geometry2, material);
@@ -498,7 +498,7 @@
         // mesh5.position.set(-500, 250, -1000);
 
         //scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
-        scene.add(plane, sphere);
+        scene.add(plane, shape);
 
         //creates stuff for bars
         for (var i = 0; i < numBars; i++) {
@@ -692,7 +692,7 @@
 
         requestAnimationFrame(render);
 
-        function render() {
+        function render(ts) {
             //const startingVertices = geometry.vertices.map(e => ({ ...e }));
 
             //function render() {
@@ -724,16 +724,18 @@
                     var vLength = plane.geometry.vertices.length;
 
                     for (let i = 0; i < vLength; i++) {
+                        //if(i % 2 === 0){
                         var v = plane.geometry.vertices[i];
                         var dist = new THREE.Vector2(v.x, v.y).sub(center);
                         var size = 5.0;
-                        var magnitude = averages[i % 8];
-                        v.z = (dist.length() / size) * magnitude/200; //+ (ts/500)
-                        plane.rotation.z += .000005;
-                        sphere.rotation.z -=.000005;
+                        var magnitude = averages[1];
+                        v.z = Math.sin(dist.length() / size + (ts/500)) * magnitude;
+                        meshArr1[0].rotation.x += .000005;
+                        meshArr1[1].rotation.z -=.000005;
+                        // meshArr1[0].rotation.x -=.000005;
+                        // meshArr1[0].rotation.z -=.000005;
                         geometryArr1.forEach(e => e.verticesNeedUpdate = true);
-                        geometryArr1.forEach(e => e.normalsNeedUpdate = true);
-
+                        //}
                     }
 
                     // for (let k = 0; k < meshArr1.length; k++) {
