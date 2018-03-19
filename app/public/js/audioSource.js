@@ -43,6 +43,11 @@ window.onload = function () {
        // app.audio.play();
        var play = true;
        document.body.appendChild(audio);
+
+       if (typeof context !== 'undefined'){
+        console.log("Out with the old.. in with the new!");
+        context.close();
+        }
        // app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
        // source = app.ctx.createMediaElementSource(app.audio); // creates audio source
        // analyser = app.ctx.createAnalyser(); // creates analyserNode
