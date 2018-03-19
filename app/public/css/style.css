@@ -1,14 +1,11 @@
 body {
     height: 100%;
+    font-family: 'Inconsolata', monospace;
 }
 
 #canvas{
     background-color: black;
-    /* background-image: url(https://media.giphy.com/media/OVlFjmEDhx9rG/giphy.gif); /*tv static from Giphy */
-    /* background: linear-gradient(to right, black, white);  gradient */
     width: 80%;
-    /*height: 100%;*/
-    /* position: relative; */
 }
 
 .error {
@@ -18,14 +15,21 @@ body {
 #overlay {
     font-size: 1em;
     color: white;
+    text-shadow: 2px 2px 4px #404E5C;
     position: absolute;
     margin-top: 2em;
+}
+
+#github {
+    margin-left: 1em;
+    margin-bottom: 1em;
 }
 
 #instructions {
     margin: 0;
     font-size: 2em;
     color: white;
+    text-shadow: 2px 2px 4px #404E5C;
     position: absolute;
     top: 50%;
     left: 50%;
