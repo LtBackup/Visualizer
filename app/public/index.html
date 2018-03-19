@@ -2,15 +2,12 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <title>Audio Visualizer</title>
 </head>
@@ -81,7 +78,7 @@
             <div class="col" id="username"></div>
         </div>
         <div class="row">
-            <div class="col-4">Toggle displays with keys: 1 2 3 4</div>
+            <div class="col-4">Toggle display with keys: 1 2 3 4</div>
             <div class="col-6"></div>
             <div class="col-2 musicPlayer">
                 <i class="fa fa-volume-off"></i>
@@ -93,17 +90,16 @@
 
     <div id="instructions">
         <p>Drag and drop an mp3 to play</p>
-        <p>(press 'K' to hide keyboard controls)</p>
+        <p>(press 'H' to hide display options)</p>
     </div>
 
-    <!-- <div class="col-md-2 musicPlayer overlay">
-        <i class="fa fa-volume-off"></i>
-        <input type="range" min="0" max="100" value="50" class="volumeBar" id="volume">
-        <i class="fa fa-volume-up"></i>
-    </div> -->
+    <div class="fixed-bottom" id="github">
+        <a href="https://github.com/LtBackup/Visualizer" target="_blank">
+            <img src="images/GitHub-Mark-Light-32px.png" alt="github logo"/>
+        </a>
+    </div>
 
     <canvas id="canvas" style="display: block;"></canvas>
-    <!-- <canvas id="myCanvas" style="display: block;"> -->
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -134,25 +130,23 @@
     <script src="js/logic.js" type="text/javascript"></script>
 
     <script>
-        //SET UP GLOBAL VARIABLES
+        /* Sets up global variables */
         var loggedIn = false;
         var mx = -500;
         var numBars = 50;
         var name;
         var i = 0;
-        var delta = 0;
-        var bool = true;
         var scalar = 0;
         var keypress;
-        var input;
         var volumePref;
         var isAnimating = false;
 
-        // if (!loggedIn) {
-        //     keypress = 1;
-        // }
-
-        //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
+        /**
+        * This function chooses which display to populate based on the user's saved preference
+        * @param {number} keypress the number representing the visualization that the user has indicated 
+        * 
+        * @returns the correct visualization
+        */
         function loadVisuals(keypress) {
             switch (keypress) {
                 case 1:
@@ -170,14 +164,13 @@
             }
         }
 
-        //SET UP SCENE
+        /* Sets up scene */
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("canvas"), antialias: true });
         renderer.setClearColor(0x333F47);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
-        // camera.position.set(0, 20, 100);
 
         var scene = new THREE.Scene();
 
@@ -255,7 +248,7 @@
         //scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
         scene.add(plane, shape);
 
-        //creates stuff for bars
+        /*creates the bar geometry and add them to scene */
         for (var i = 0; i < numBars; i++) {
             var y = Math.floor((Math.random() * 300) + 100);
             var geometry = new THREE.BoxGeometry(10, y, 5);
@@ -272,11 +265,7 @@
             geometryArr2.push(geometry);
         }
 
-        /* create sphereS */
-
-        var sphereArr = [];
-        var sphereMeshArr = [];
-
+        /* create spheres and add them to the scene */
         var sphere1 = new THREE.SphereGeometry(200, 100, 10);
         var sphere2 = new THREE.SphereGeometry(200, 100, 10);
         var sphere3 = new THREE.SphereGeometry(200, 100, 10);
@@ -307,11 +296,11 @@
         // sphereMesh6.position.set(0, -100, -3000);
         
         var groundMaterial = new THREE.MeshPhongMaterial({
-             shininess: 80,
+            shininess: 80,
             color: 0xffffff,
             specular: 0xffffff
-        
-                });
+        });
+
         var ground = new THREE.Mesh(spherePlane, groundMaterial);
         ground.rotation.x = -Math.PI / 2;
         ground.position.set( 0, 0, 0 );
@@ -319,7 +308,8 @@
         ground.receiveShadow = true;
         scene.add(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5, ground);
 
-        //ice scene visual objects
+        /* add ice scene visual objects */
+
         var geometry1 = new THREE.BoxGeometry(100, 10, 200);
         var geometry2 = new THREE.BoxGeometry(100, 10, 200);
         var geometry3 = new THREE.BoxGeometry(100, 10, 200);
@@ -367,12 +357,13 @@
         mesh10.rotation.x = Math.PI;
 
         hideVisuals();
-        //console.log(meshArr2, "meshArr2");
-        //console.log(geometryArr2, "geometryArr2");
 
-        //keypress = whatever comes from the DB
-        //server logic: if no existing user, send back 1
-        //hide everything that isn't keypress
+        
+        /** 
+        * This function hides the visual displays that do not match the number the user keyed
+        * 
+        * @returns the correct visualization
+        */
         function hideVisuals() {
             for (var i = 0; i < meshArrs.length; i++) {
                 if (i !== keypress - 1) {
@@ -389,44 +380,45 @@
             }
         }
 
-        //CHOOSE WHICH SHAPE TO CREATE BASED ON USER SELECTION
+        /**
+         * This function sets the correct keypress that then is used to determine the shapes displayed
+         * 
+         * @param {event} e a keycode
+         * 
+         * @returns keypress
+         */
         function setKeypress(e) {
             if (isAnimating === true) {
                 if (e.which >= 49 && e.which <= 52) {
-                    //console.log("hiding");
                     meshArrs[keypress - 1].forEach(e => e.visible = false);
                 }
                 switch (e.which) {
                     case 49:
                         keypress = 1;
                         meshArrs[keypress - 1].forEach(e => e.visible = true);
-                        //clearScene();
-                        //createCubes();
                         break;
                     case 50:
                         keypress = 2;
                         meshArrs[keypress - 1].forEach(e => e.visible = true);
-                        //clearScene();
-                        //createBars();
                         break;
                     case 51:
                         keypress = 3;
                         meshArrs[keypress - 1].forEach(e => e.visible = true);
-                        //clearScene();
-                        //createBars();
                         break;
                     case 52:
                         keypress = 4;
                         meshArrs[keypress - 1].forEach(e => e.visible = true);
-                        //clearScene();
-                        //createBars();
                         break;
-                    case 75:
+                    case 72:
                         $('#overlay').toggle();
+                        $('#github').toggle();
                         break;
                 }
-                //console.log(keypress);
 
+                /**
+                 * If the user is logged in, make an AJAX call to the database to save their preferences each time a change is made
+                 * 
+                 */
                 if (loggedIn) {
                     let update =
                         {

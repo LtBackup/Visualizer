@@ -1,14 +1,10 @@
 body {
     height: 100%;
+    font-family: 'Inconsolata', monospace;
 }
 
-#canvas{
+#canvas {
     background-color: black;
-    /* background-image: url(https://media.giphy.com/media/OVlFjmEDhx9rG/giphy.gif); /*tv static from Giphy */
-    /* background: linear-gradient(to right, black, white);  gradient */
-    width: 80%;
-    /*height: 100%;*/
-    /* position: relative; */
 }
 
 .error {
@@ -18,14 +14,21 @@ body {
 #overlay {
     font-size: 1em;
     color: white;
+    text-shadow: 2px 2px 4px #404E5C;
     position: absolute;
     margin-top: 2em;
+}
+
+#github {
+    margin-left: 1em;
+    margin-bottom: 1em;
 }
 
 #instructions {
     margin: 0;
     font-size: 2em;
     color: white;
+    text-shadow: 2px 2px 4px #404E5C;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -33,22 +36,15 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/*  Music Player CSS below -------------taken from CannonMan-----------------------*/
-/* .musicPlayer {
-    position: relative;
-    font-size: 22px;
-    color: white;
-    margin-top: 28px;
-    width: 150px;
-}
-.overlay { position:absolute; top:5px; right:10px; } */
+/*  Music Player CSS credit: Cannon Man 
+https://github.com/LtBackup/Cannon-Game */
+
 .volumeBar {
     -webkit-appearance: none;
     width: 82px !important;
     height: 3px;
     margin-left: 0px;
     border-radius: 1.5px;
-    /* background: white; */
     background: linear-gradient(to right, black, white);
     opacity: .3;
     display: inline-block;
@@ -86,7 +82,6 @@ body {
     padding: 18px 0px 0px 48px;
     font-weight: bold;
 }
-
 .version a {
     color: #fff;
 }
