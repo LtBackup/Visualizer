@@ -3,9 +3,8 @@ body {
     font-family: 'Inconsolata', monospace;
 }
 
-#canvas{
+#canvas {
     background-color: black;
-    width: 80%;
 }
 
 .error {
@@ -37,22 +36,15 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/*  Music Player CSS below -------------taken from CannonMan-----------------------*/
-/* .musicPlayer {
-    position: relative;
-    font-size: 22px;
-    color: white;
-    margin-top: 28px;
-    width: 150px;
-}
-.overlay { position:absolute; top:5px; right:10px; } */
+/*  Music Player CSS credit: Cannon Man 
+https://github.com/LtBackup/Cannon-Game */
+
 .volumeBar {
     -webkit-appearance: none;
     width: 82px !important;
     height: 3px;
     margin-left: 0px;
     border-radius: 1.5px;
-    /* background: white; */
     background: linear-gradient(to right, black, white);
     opacity: .3;
     display: inline-block;
@@ -90,7 +82,6 @@ body {
     padding: 18px 0px 0px 48px;
     font-weight: bold;
 }
-
 .version a {
     color: #fff;
 }
