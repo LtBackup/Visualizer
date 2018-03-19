@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-    
+
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <title>Audio Visualizer</title>
 </head>
@@ -31,15 +31,16 @@
                         </div>
                         <div class="form-group">
                             <label for="newPassword">Password</label>
-                            <input type="password" class="form-control" id="newPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum" minlength="5">
+                            <input type="password" class="form-control" id="newPassword" placeholder="Create a password." pattern=".{5,}" required title="5 characters minimum"
+                                minlength="5">
                         </div>
-                    
-                    <div class="error"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
+
+                        <div class="error"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -66,11 +67,11 @@
                             <input type="password" class="form-control" id="existingPassword" placeholder="Enter Your Password" pattern=".{5,}" required>
                         </div>
                         <div class="error"></div>
-                    </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -446,32 +447,42 @@
         var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4, geometryArr5];
 
         //creates stuff for cubes
+
         // var geometry1 = new THREE.BoxGeometry(100, 100, 100);
         // var geometry2 = new THREE.BoxGeometry(100, 100, 100);
         // var geometry3 = new THREE.BoxGeometry(100, 100, 100);
         // var geometry4 = new THREE.BoxGeometry(100, 100, 100);
         // var geometry5 = new THREE.BoxGeometry(100, 100, 100);
         // var geometry = new THREE.BoxGeometry(100, 100, 100);
-        var waveFunc = function(u, v){
-            var x = -100 + 200 * v;
-            //var x = canvas.innerWidth;
-            //var y = Math.pow(Math.sin(u * Math.PI / 2),v);
-            var y = Math.sin(u * Math.PI) + Math.sin(v * Math.PI) * 60;
-            var z = -100 + 200 * v;
-            console.log("making wave");
-            return new THREE.Vector3(x,y,z);
-            
-        }
+        // var waveFunc = function(u, v){
+        //     var x = -100 + 200 * v;
+        //     //var x = canvas.innerWidth;
+        //     //var y = Math.pow(Math.sin(u * Math.PI / 2),v);
+        //     var y = Math.sin(u * Math.PI) + Math.sin(v * Math.PI) * 60;
+        //     var z = -100 + 200 * v;
+        //     console.log("making wave");
+        //     return new THREE.Vector3(x,y,z);
+
+        // }
         //goto
-        var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
-        geometry.scale.y = 50;
-        geometryArr1.push(geometry);
+        //var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
+        //geometry.scale.y = 50;
+        var geometry = new THREE.SphereGeometry(3000);
+        var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
+        var planeGeometry = new THREE.PlaneGeometry(6000, 6000, 50, 50);
+        geometryArr1.push(geometry, planeGeometry);
         //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
         //console.log(geometryArr1, "geometryArr1");
-        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(0, 0, -1000);
-        meshArr1.push(mesh);
+
+
+        var material = new THREE.MeshPhysicalMaterial({ color: 0x00FF00, wireframe: false, side: THREE.DoubleSide });
+        var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
+        var sphere = new THREE.Mesh(geometry, normalMaterial);
+        var plane = new THREE.Mesh(planeGeometry, material);
+        meshArr1.push(sphere, plane);
+        plane.position.set(0, -200, 0);
+        sphere.position.set(0, 0, 0);
+        plane.rotation.x += -Math.PI / 2;
         // var mesh1 = new THREE.Mesh(geometry1, material);
         // var mesh2 = new THREE.Mesh(geometry2, material);
         // var mesh3 = new THREE.Mesh(geometry3, material);
@@ -487,7 +498,7 @@
         // mesh5.position.set(-500, 250, -1000);
 
         //scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
-        scene.add(mesh);
+        scene.add(plane, sphere);
 
         //creates stuff for bars
         for (var i = 0; i < numBars; i++) {
@@ -698,24 +709,40 @@
                     // for (let j = 0; j < 5; j++) {
                     //     scalars.push(averages[j] / 50);
                     // }
-        var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
-        geometry.scale.y = 50;
-        geometryArr1.push(geometry);
-        //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
-        //console.log(geometryArr1, "geometryArr1");
-        var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(0, -100, -500);
-        meshArr1.push(mesh);
-        scene.add(mesh);
+                    // var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
+                    // geometry.scale.y = 50;
+                    // geometryArr1.push(geometry);
+                    // //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
+                    // //console.log(geometryArr1, "geometryArr1");
+                    // var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
+                    // var mesh = new THREE.Mesh(geometry, material);
+                    // mesh.position.set(0, -100, -500);
+                    // meshArr1.push(mesh);
+                    // scene.add(mesh);
 
-                    for (let k = 0; k < meshArr1.length; k++) {
-                        meshArr1[k].position.z += 10; // SCALE
-                        //meshArr1[k].rotation.y += .01;
+                    var center = new THREE.Vector2(0, 0);
+                    var vLength = plane.geometry.vertices.length;
+
+                    for (let i = 0; i < vLength; i++) {
+                        var v = plane.geometry.vertices[i];
+                        var dist = new THREE.Vector2(v.x, v.y).sub(center);
+                        var size = 5.0;
+                        var magnitude = averages[i % 8];
+                        v.z = (dist.length() / size) * magnitude/200; //+ (ts/500)
+                        plane.rotation.z += .000005;
+                        sphere.rotation.z -=.000005;
+                        geometryArr1.forEach(e => e.verticesNeedUpdate = true);
+                        geometryArr1.forEach(e => e.normalsNeedUpdate = true);
+
+                    }
+
+                    // for (let k = 0; k < meshArr1.length; k++) {
+                    //meshArr1[k].position.z += .01; // SCALE
+                    //meshArr1[k].rotation.y += .01;
                     //     meshArr1[k].scale.y = scalars[k]; // SCALE
                     //     meshArr1[k].scale.z = scalars[k]; // SCALE
-                        geometryArr1[k].verticesNeedUpdate = true;
-                    }
+                    //geometryArr1[k].verticesNeedUpdate = true;
+                    //}
                     break;
                 case 2:
                     // meshArr2.forEach(element => {
