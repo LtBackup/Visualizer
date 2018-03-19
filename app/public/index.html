@@ -730,10 +730,11 @@
                         var size = 5.0;
                         var magnitude = averages[1];
                         v.z = Math.sin(dist.length() / size + (ts/500)) * magnitude;
-                        meshArr1[0].rotation.x += .000005;
+                        meshArr1[0].rotation.x += .000001;
+                        
+                        meshArr1[0].rotation.y -=.000001;
+                        meshArr1[0].rotation.z -=.000001;
                         meshArr1[1].rotation.z -=.000005;
-                        // meshArr1[0].rotation.x -=.000005;
-                        // meshArr1[0].rotation.z -=.000005;
                         geometryArr1.forEach(e => e.verticesNeedUpdate = true);
                         //}
                     }
