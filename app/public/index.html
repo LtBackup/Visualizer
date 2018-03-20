@@ -180,48 +180,24 @@
         var light1 = new THREE.PointLight(0xffffff, 0.5);
         scene.add(light1);
 
+        //setup arrays for visual elements in each scene
         var meshArr1 = [];
         var meshArr2 = [];
         var meshArr3 = [];
         var meshArr4 = [];
-        var meshArr5 = [];
         var geometryArr1 = [];
         var geometryArr2 = [];
         var geometryArr3 = [];
         var geometryArr4 = [];
-        var geometryArr5 = [];
 
-        var meshArrs = [meshArr1, meshArr2, meshArr3, meshArr4, meshArr5];
-        var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4, geometryArr5];
+        var meshArrs = [meshArr1, meshArr2, meshArr3, meshArr4];
+        var geometryArrs = [geometryArr1, geometryArr2, geometryArr3, geometryArr4];
 
-        //creates stuff for cubes
-
-        // var geometry1 = new THREE.BoxGeometry(100, 100, 100);
-        // var geometry2 = new THREE.BoxGeometry(100, 100, 100);
-        // var geometry3 = new THREE.BoxGeometry(100, 100, 100);
-        // var geometry4 = new THREE.BoxGeometry(100, 100, 100);
-        // var geometry5 = new THREE.BoxGeometry(100, 100, 100);
-        // var geometry = new THREE.BoxGeometry(100, 100, 100);
-        // var waveFunc = function(u, v){
-        //     var x = -100 + 200 * v;
-        //     //var x = canvas.innerWidth;
-        //     //var y = Math.pow(Math.sin(u * Math.PI / 2),v);
-        //     var y = Math.sin(u * Math.PI) + Math.sin(v * Math.PI) * 60;
-        //     var z = -100 + 200 * v;
-        //     console.log("making wave");
-        //     return new THREE.Vector3(x,y,z);
-
-        // }
-        //goto
-        //var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
-        //geometry.scale.y = 50;
+        //Scene 1 visual elements
         var geometry = new THREE.IcosahedronGeometry(2000);
         var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
         var planeGeometry = new THREE.PlaneGeometry(6000, 6000, 50, 50);
         geometryArr1.push(geometry, planeGeometry);
-        //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
-        //console.log(geometryArr1, "geometryArr1");
-
 
         var material = new THREE.MeshStandardMaterial({ color: 0xa200ff, wireframe: true, side: THREE.DoubleSide });
         var normalMaterial = new THREE.MeshNormalMaterial({side: THREE.DoubleSide});
@@ -231,23 +207,10 @@
         plane.position.set(0, -150, 0);
         shape.position.set(0, 0, 0);
         plane.rotation.x += -Math.PI / 2;
-        // var mesh1 = new THREE.Mesh(geometry1, material);
-        // var mesh2 = new THREE.Mesh(geometry2, material);
-        // var mesh3 = new THREE.Mesh(geometry3, material);
-        // var mesh4 = new THREE.Mesh(geometry4, material);
-        // var mesh5 = new THREE.Mesh(geometry5, material);
-        // meshArr1.push(mesh1, mesh2, mesh3, mesh4, mesh5);
-        //console.log(meshArr1, "meshArr1");
-
-        // mesh1.position.set(0, 0, -1000);
-        // mesh2.position.set(500, 250, -1000);
-        // mesh3.position.set(500, -250, -1000);
-        // mesh4.position.set(-500, -250, -1000);
-        // mesh5.position.set(-500, 250, -1000);
-
-        //scene.add(mesh1, mesh2, mesh3, mesh4, mesh5);
+        
         scene.add(plane, shape);
 
+        //Scene 2 visual elements
         /*creates the bar geometry and add them to scene */
         for (var i = 0; i < numBars; i++) {
             var y = Math.floor((Math.random() * 300) + 100);
@@ -264,7 +227,8 @@
             meshArr2.push(mesh);
             geometryArr2.push(geometry);
         }
-
+        
+        //Scene 3 visual elements
         /* create spheres and add them to the scene */
         var sphere1 = new THREE.SphereGeometry(200, 100, 10);
         var sphere2 = new THREE.SphereGeometry(200, 100, 10);
@@ -293,7 +257,6 @@
         sphereMesh3.position.set(0, 0, -3000);
         sphereMesh4.position.set(500, 0, -3000);
         sphereMesh5.position.set(1000, 0, -3000);
-        // sphereMesh6.position.set(0, -100, -3000);
         
         var groundMaterial = new THREE.MeshPhongMaterial({
             shininess: 80,
@@ -308,8 +271,7 @@
         ground.receiveShadow = true;
         scene.add(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5, ground);
 
-        /* add ice scene visual objects */
-
+        //Scene 4 visual elements
         var geometry1 = new THREE.BoxGeometry(100, 10, 200);
         var geometry2 = new THREE.BoxGeometry(100, 10, 200);
         var geometry3 = new THREE.BoxGeometry(100, 10, 200);
@@ -356,9 +318,9 @@
         mesh8.rotation.x = Math.PI;
         mesh10.rotation.x = Math.PI;
 
+        //Initialize the scene by hiding all visual elements
         hideVisuals();
 
-        
         /** 
         * This function hides the visual displays that do not match the number the user keyed
         * 
@@ -371,12 +333,6 @@
                         meshArrs[i][j].visible = false;
                     }
                 }
-            }
-        }
-
-        function clearScene(i) {
-            while (scene.children.length > 0) {
-                scene.remove(scene.children[0]);
             }
         }
 
@@ -432,10 +388,7 @@
                         type: 'PUT',
                         dataType: 'JSON',
                         data: update
-                    })
-                        .then(function (response) {
-                            console.log("preferences saved");
-                        });
+                    });
                 }
             }
         };
