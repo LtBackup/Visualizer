@@ -1,12 +1,8 @@
-var app = app || {};
 var source;
-var buffer;
 var analyser;
 var audio = false;
 
 window.onload = function () {
-
-   // app.init();
 
    console.log('audio loader connected');
    window.addEventListener('drop', onDrop, false);
@@ -14,8 +10,7 @@ window.onload = function () {
 
    function onDrag(e) {
        e.stopPropagation();
-       e.preventDefault();4
-       // $('#notification').velocity('fadeOut', { duration: 150 });
+       e.preventDefault();
        return false;
    }
    function onDrop(e) {
