@@ -4,20 +4,26 @@ var buffer;
 var analyser;
 var audio = false;
 
+/**
+ * Onload on windows object which provides initialization for Visualizer application 
+ */
 window.onload = function () {
 
-   // app.init();
-
-   console.log('audio loader connected');
    window.addEventListener('drop', onDrop, false);
    window.addEventListener('dragover', onDrag, false);
-
+ /**
+  * Function to handle onDrag event listener added to the window object
+  * @param {object} e - Event object
+  */
    function onDrag(e) {
        e.stopPropagation();
-       e.preventDefault();4
-       // $('#notification').velocity('fadeOut', { duration: 150 });
+       e.preventDefault();
        return false;
    }
+ /**
+  * Function to handle onDrop event listener added to the window object
+  * @param {object} e - Event object
+  */
    function onDrop(e) {
        e.stopPropagation();
        e.preventDefault();
@@ -25,22 +31,24 @@ window.onload = function () {
       $('#instructions').fadeOut(1000);
        initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
    }
+/**
+ * Callnack function to support pausing.
+ */
    function animationFrame(){
        console.log("Hi. Animation canceled.")
    };
+/**
+ * Handles drag and drop functionality, and passes on MP3 file for further processing
+ * @param {Object} data - object URL representing audio input
+ */
    function initiateAudio(data) {
-    //    if (animationFrame) {
-    //     window.cancelAnimationFrame(animationFrame);
-    //    }
        if (audio) {
            audio.pause();
            window.cancelAnimationFrame(animationFrame);
-          // window.onanimationcancel = window.onload;
        }
-       audio = document.createElement('audio'); // creates an html audio element
-       audio.src = URL.createObjectURL(data); // sets the audio source to the dropped file
+       audio = document.createElement('audio');
+       audio.src = URL.createObjectURL(data);
        audio.autoplay = true;
-       // app.audio.play();
        var play = true;
        document.body.appendChild(audio);
 
@@ -48,12 +56,7 @@ window.onload = function () {
         console.log("Out with the old.. in with the new!");
         context.close();
         }
-       // app.ctx = new (window.AudioContext || window.webkitAudioContext)(); // creates audioNode
-       // source = app.ctx.createMediaElementSource(app.audio); // creates audio source
-       // analyser = app.ctx.createAnalyser(); // creates analyserNode
-       // source.connect(app.ctx.destination); // connects the audioNode to the audioDestinationNode (computer speakers)
-       // source.connect(analyser); // connects the analyser node to the audioNode and the audioDestinationNode
-       console.log("sending MP3 dropped on page", audio.src);
+        
        audioAnalyzer(audio);
    }
 
