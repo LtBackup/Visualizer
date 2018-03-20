@@ -135,8 +135,6 @@
         var mx = -500;
         var numBars = 50;
         var name;
-        var i = 0;
-        var scalar = 0;
         var keypress;
         var volumePref;
         var isAnimating = false;
@@ -393,55 +391,43 @@
             }
         };
 
+        /**
+         * This function acts as the link between the audio file input and the rendering engine.
+         * We update the current audio data frequency data in the stream every animation frame
+         * 
+         * @returns undefined
+         */
         function animate() {
             (window.requestAnimationFrame || window.webkitRequestAnimationFrame)
                 (animate);
             var array = [];
-            // get the average for the first channel
-            // for (var i = 0; i < 8; i++) {
             array = new Uint8Array(analyser.frequencyBinCount);
-            //console.log('array');
-            //console.log(array);
+
             analyser.getByteFrequencyData(array);
             averages = getAverageVolume(array);
         }
 
-
-        requestAnimationFrame(render);
-
+        /**
+         * This function is the animation engine that runs with every animation frame.
+         * This is usually around 60 frames per second, assuming no lag.
+         * The function runs a different set of rendering logic based on what scene is currently active
+         *
+         * @param {double} ts is a time stamp measured in milliseconds. requestAnimationFrame gives the callback this parameter
+         * 
+         * @returns undefined
+         */
         function render(ts) {
-            //const startingVertices = geometry.vertices.map(e => ({ ...e }));
 
-            //function render() {
             switch (keypress) {
                 case 1:
                     meshArr1.forEach(element => {
                         element.visible = true;
                     });
-                    // meshArr1[0].rotation.x += 0.02;
-                    // meshArr1[0].rotation.y += 0.02;
-
-
-                    // var scalars = [];
-                    // for (let j = 0; j < 5; j++) {
-                    //     scalars.push(averages[j] / 50);
-                    // }
-                    // var geometry = new THREE.ParametricGeometry(waveFunc, 10, 10);
-                    // geometry.scale.y = 50;
-                    // geometryArr1.push(geometry);
-                    // //geometryArr1.push(geometry1, geometry2, geometry3, geometry4, geometry5);
-                    // //console.log(geometryArr1, "geometryArr1");
-                    // var material = new THREE.MeshLambertMaterial({ color: 0xF3FFE2, side: THREE.DoubleSide });
-                    // var mesh = new THREE.Mesh(geometry, material);
-                    // mesh.position.set(0, -100, -500);
-                    // meshArr1.push(mesh);
-                    // scene.add(mesh);
 
                     var center = new THREE.Vector2(0, 0);
                     var vLength = plane.geometry.vertices.length;
 
                     for (let i = 0; i < vLength; i++) {
-                        //if(i % 2 === 0){
                         var v = plane.geometry.vertices[i];
                         var dist = new THREE.Vector2(v.x, v.y).sub(center);
                         var size = 5.0;
@@ -453,22 +439,11 @@
                         meshArr1[0].rotation.z -=.000001;
                         meshArr1[1].rotation.z -=.000005;
                         geometryArr1.forEach(e => e.verticesNeedUpdate = true);
-                        //}
                     }
-
-                    // for (let k = 0; k < meshArr1.length; k++) {
-                    //meshArr1[k].position.z += .01; // SCALE
-                    //meshArr1[k].rotation.y += .01;
-                    //     meshArr1[k].scale.y = scalars[k]; // SCALE
-                    //     meshArr1[k].scale.z = scalars[k]; // SCALE
-                    //geometryArr1[k].verticesNeedUpdate = true;
-                    //}
                     break;
                 case 2:
-                    // meshArr2.forEach(element => {
-                    //     element.visible = true;
-                    // });
-                    scalar = averages[0] / 50
+                   
+                    var scalar = averages[0] / 50
 
                     for (var i = 0; i < meshArr2.length; i++) {
                         meshArr2[i].rotation.x += 0.01;
@@ -514,81 +489,16 @@
                     }
                     break;
 
-
-                // directionalLight.position.set( i/50, i/50, 200 );
-
-
             }
             renderer.render(scene, camera);
             requestAnimationFrame(render);
         }
-
-
-
-        //CREATE BARS IF 2 IS KEYED
-        //function createBars() {
-
-        // requestAnimationFrame(render);
-
-        // const startingVertices = geometry.vertices.map(e => ({ ...e }));
-
-        // function render() {
-
-        //     meshArrs[keypress - 1];
-
-        //     if (i === geometry.vertices.length) {
-        //         i = 0;
-        //     }
-
-        //     scalar = averages[0] / 50
-
-        //     for (var i = 0; i < meshArr2.length; i++) {
-        //         meshArr2[i].rotation.x += 0.01;
-        //         meshArr2[i].rotation.y += 0.01;
-
-        //         meshArr2[i].scale.y = scalar; // SCALE
-        //         meshArr2[i].scale.z = scalar; // SCALE
-        //         geometryArr2[i].verticesNeedUpdate = true;
-        //     }
-
-        //     renderer.render(scene, camera);
-        //     requestAnimationFrame(render);
-
-        //     i++;
-        // }
-        //}
-
-        //CREATE BARS IF 1 IS KEYED
-        // function createCubes() {
-
-        //     requestAnimationFrame(render);
-
-        //     function render() {
-        //         if (i === geometry1.vertices.length) {
-        //             i = 0;
-        //         }
-        //         mesh1.rotation.x += 0.02;
-        //         mesh1.rotation.y += 0.02;
-
-        //         var scalars = [];
-        //         for (let j = 0; j < 5; j++) {
-        //             scalars.push(averages[j] / 50);
-        //         }
-
-        //         for (let k = 0; k < meshArr1.length; k++) {
-        //             meshArr1[k].scale.x = scalars[k]; // SCALE
-        //             meshArr1[k].scale.y = scalars[k]; // SCALE
-        //             meshArr1[k].scale.z = scalars[k]; // SCALE
-        //             geometryArr1[k].verticesNeedUpdate = true;
-        //         }
-
-        //         renderer.render(scene, camera);
-        //         requestAnimationFrame(render);
-
-        //         //i++;
-        //     }
-        // }
-
+        
+        /**
+         * This function is called whenever the browser window is resized and adjusts visuals accordingly
+         *
+         * @returns undefined
+         */
         function onWindowResize() {
 
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -598,12 +508,11 @@
 
         }
 
+        requestAnimationFrame(render);
 
         document.addEventListener('keydown', setKeypress);
 
         window.addEventListener('resize', onWindowResize, false);
-
-
 
     </script>
 </body>
