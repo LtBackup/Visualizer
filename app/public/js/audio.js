@@ -62,12 +62,14 @@ function audioAnalyzer(audio) {
                     context.suspend().then(function () {
                         $("#status")
                             .html("Suspend music...")
+                            .fadeIn(1000)
                             .fadeOut(2000);
                     });
                 } else if (context.state === "suspended") {
                     context.resume().then(function () {
                         $("#status")
                             .html("Resume music...")
+                            .fadeIn(1000)
                             .fadeOut(2000);
                     });
                 }

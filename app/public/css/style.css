@@ -24,6 +24,11 @@ body {
     margin-bottom: 1em;
 }
 
+#status {
+    color: white;
+    text-align:center;
+    margin-right:20px; 
+}
 #instructions {
     margin: 0;
     font-size: 2em;
