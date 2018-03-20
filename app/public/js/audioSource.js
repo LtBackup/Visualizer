@@ -1,6 +1,4 @@
-var app = app || {};
 var source;
-var buffer;
 var analyser;
 var audio = false;
 
@@ -29,14 +27,14 @@ window.onload = function () {
        e.preventDefault();
        var droppedFiles = e.dataTransfer.files;
       $('#instructions').fadeOut(1000);
-       initiateAudio(droppedFiles[0]); // initiates audio from the dropped file
+       initiateAudio(droppedFiles[0]);
    }
 /**
- * Callnack function to support pausing.
+ * Callback function to support pausing.
  */
    function animationFrame(){
-       console.log("Hi. Animation canceled.")
    };
+   
 /**
  * Handles drag and drop functionality, and passes on MP3 file for further processing
  * @param {Object} data - object URL representing audio input
@@ -53,7 +51,6 @@ window.onload = function () {
        document.body.appendChild(audio);
 
        if (typeof context !== 'undefined'){
-        console.log("Out with the old.. in with the new!");
         context.close();
         }
         

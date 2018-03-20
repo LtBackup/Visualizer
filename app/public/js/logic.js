@@ -9,7 +9,6 @@ $(document).ready(function() {
       username: $("#existingUsername").val().trim(),
       password: $("#existingPassword").val().trim()
     };
-    console.log("existing user object sent to server", existingUser);
     
     validateUser(existingUser);
   });
@@ -23,8 +22,6 @@ $(document).ready(function() {
                     name = data.username;
                     keypress = data.displayPreference;
                     volumePref = data.volumeLevel;
-                    console.log(data.volumeLevel);
-                    console.log("here is the user that matched", data);
                     $('#existingUserModal').modal('hide');
                     $('#username').text("Welcome " + name);
                     loadVisuals(keypress);
@@ -46,7 +43,6 @@ $(document).ready(function() {
         username: $("#newUsername").val().trim(),
         password: $("#newPassword").val().trim(),
       };
-        console.log("new user object", newUser);
 
         createUser(newUser);
     });
@@ -59,13 +55,10 @@ $(document).ready(function() {
               name = data.username;
               keypress = data.displayPreference;
               volumePref = data.volumeLevel;
-              console.log("logged in", loggedIn);
-              console.log("Data from server: ", data);
               $('#newUserModal').modal('hide');
               $('#username').text("Welcome " + name);
             
             } else {
-              console.log("user already exists with that name");
               $(".error").text("A user already exists with that name. Try again!");
               $("#newUsername").val("");
               $("#newPassword").val("");
