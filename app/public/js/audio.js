@@ -75,7 +75,7 @@ function audioAnalyzer(audio) {
         });
     animate();
 }
-/*
+/**
 * This function averages the frequency data across 8 equal sized sections across the audio spectrum.
 * It also modifies the averages by certain tested amounts for ideal visual display
 * @param {array} the array of raw sound frequency data 
