@@ -115,14 +115,31 @@ var sphereMesh4 = new THREE.Mesh(sphere4, sphereMaterial4);
 var sphereMesh5 = new THREE.Mesh(sphere5, sphereMaterial5);
 var spherePlane= new THREE.PlaneBufferGeometry(8000, 8000);
 var _material= new THREE.MeshToonMaterial({ color: 0xFFFFFF })
+scene.add(sphereMesh3);
 
 meshArr3.push(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5);
+
+var pivot1 = new THREE.Object3D();
+scene.add(pivot1);
+var pivot2 = new THREE.Object3D();
+scene.add(pivot2);
+var pivot4 = new THREE.Object3D();
+scene.add(pivot4);
+var pivot5 = new THREE.Object3D();
+scene.add(pivot5);
 
 sphereMesh1.position.set(-1100, 0, -3000);
 sphereMesh2.position.set(-500, 0, -3000);
 sphereMesh3.position.set(0, 0, -3000);
 sphereMesh4.position.set(500, 0, -3000);
 sphereMesh5.position.set(1000, 0, -3000);
+
+pivot1.add(sphereMesh1);
+pivot2.add(sphereMesh2);
+pivot4.add(sphereMesh4);
+pivot5.add(sphereMesh5);
+
+
 
 var groundMaterial = new THREE.MeshPhongMaterial({
     shininess: 80,
@@ -135,7 +152,7 @@ ground.rotation.x = -Math.PI / 2;
 ground.position.set( 0, 0, 0 );
 ground.scale.set( 1000, 1000, 1000 );
 ground.receiveShadow = true;
-scene.add(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5, ground);
+scene.add(ground);
 
 //Scene 4 visual elements
 var geometry1 = new THREE.BoxGeometry(100, 10, 200);
@@ -324,13 +341,11 @@ function render(ts) {
             break;
 
         case 3:
-            if (i === sphere1.vertices.length) {
-                i = 0;
-            }
-            sphereMesh1.rotation.x += 0.02;
-            sphereMesh1.rotation.y += 0.02;
-            sphereMesh2.rotation.z += 0.02;
-            sphereMesh2.rotation.y += 0.02;
+
+            pivot1.rotation.z += .08;
+            pivot2.rotation.z -= .10;
+            pivot4.rotation.z += .10;
+            pivot5.rotation.z -= .15;
 
             var scalars = [];
             for (let j = 0; j < 5; j++) {
