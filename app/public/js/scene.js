@@ -128,7 +128,6 @@ scene.add(pivot4);
 var pivot5 = new THREE.Object3D();
 scene.add(pivot5);
 
-//scene.add(pivot1, pivot2, pivot4, pivot5);
 sphereMesh1.position.set(-1100, 0, -3000);
 sphereMesh2.position.set(-500, 0, -3000);
 sphereMesh3.position.set(0, 0, -3000);
@@ -332,7 +331,7 @@ function render(ts) {
             var scalar = averages[0] / 50
 
             for (var i = 0; i < meshArr2.length; i++) {
-                meshArr2[i].rotation.y += 0.01;
+                meshArr2[i].rotation.x += 0.01;
                 meshArr2[i].rotation.y += 0.01;
 
                 meshArr2[i].scale.y = scalar; // SCALE
