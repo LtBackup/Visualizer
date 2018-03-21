@@ -36,7 +36,7 @@ renderer.setClearColor(0x333F47);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 4000);
+var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000);
 
 var scene = new THREE.Scene();
 
@@ -115,24 +115,18 @@ var sphereMesh4 = new THREE.Mesh(sphere4, sphereMaterial4);
 var sphereMesh5 = new THREE.Mesh(sphere5, sphereMaterial5);
 var spherePlane= new THREE.PlaneBufferGeometry(8000, 8000);
 var _material= new THREE.MeshToonMaterial({ color: 0xFFFFFF })
-var point = new THREE.Object3D();
-//scene.add(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5);
-scene.add(sphereMesh3, point);
+scene.add(sphereMesh3);
 
 meshArr3.push(sphereMesh1, sphereMesh2, sphereMesh3, sphereMesh4, sphereMesh5);
 
-point.position.set(0,0,-3000);
-
-//new
 var pivot1 = new THREE.Object3D();
-// sun.add(pivot1);
-point.add(pivot1);
+scene.add(pivot1);
 var pivot2 = new THREE.Object3D();
-point.add(pivot2);
+scene.add(pivot2);
 var pivot4 = new THREE.Object3D();
-point.add(pivot4);
+scene.add(pivot4);
 var pivot5 = new THREE.Object3D();
-point.add(pivot5);
+scene.add(pivot5);
 
 //scene.add(pivot1, pivot2, pivot4, pivot5);
 sphereMesh1.position.set(-1100, 0, -3000);
@@ -348,19 +342,11 @@ function render(ts) {
             break;
 
         case 3:
-            // if (i === sphere1.vertices.length) {
-            //     i = 0;
-            // }
-            // sphereMesh1.rotation.x += 0.02;
-            // sphereMesh1.rotation.y += 0.02;
-            // sphereMesh2.rotation.z += 0.02;
-            // sphereMesh2.rotation.y += 0.02;
 
-            pivot1.rotation.z += .01;
-            pivot2.rotation.z -= .01;
-            pivot4.rotation.z += .01;
-            pivot5.rotation.z -= .01;
-
+            pivot1.rotation.z += .08;
+            pivot2.rotation.z -= .10;
+            pivot4.rotation.z += .10;
+            pivot5.rotation.z -= .15;
 
             var scalars = [];
             for (let j = 0; j < 5; j++) {
