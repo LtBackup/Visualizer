@@ -18,7 +18,10 @@ This application is [hosted on Heroku](https://visualizer-3d.herokuapp.com/), so
 - [JawsDB MySQL](https://elements.heroku.com/addons/jawsdb)
 
 ### Visualization Options
-(insert screenshots here of all 4 visualizations once complete)
+![Option 1:](/images/screenshots/Lines.png "Created by Jim")
+![Option 2:](/images/screenshots/Bars.png  "Created by Molly")
+![Option 3:](/images/screenshots/Spheres.png  "Created by Matt")
+![Option 4:](/images/screenshots/Ice.png "Created by Jim")
 
 ## Future Ideas
 Future enhancements to the site could include:
