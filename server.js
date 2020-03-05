@@ -10,15 +10,11 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Requiring our models for syncing
-var db = require("./app/models/models.js");
-
 // Static directory
 app.use(express.static("app/public"));
 
 // Routes
 // =============================================================
-require("./app/routes/apiRoutes.js")(app);
 require("./app/routes/htmlRoutes.js")(app);
 
 // Listener

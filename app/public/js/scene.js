@@ -1,34 +1,8 @@
 /* Sets up global variables */
-var loggedIn = false;
 var mx = -500;
 var numBars = 50;
 var name;
-var keypress;
-var volumePref;
-var isAnimating = false;
-
-/**
-* This function chooses which display to populate based on the user's saved preference
-* @param {number} keypress the number representing the visualization that the user has indicated 
-* 
-* @returns the correct visualization
-*/
-function loadVisuals(keypress) {
-    switch (keypress) {
-        case 1:
-            meshArrs[keypress - 1].forEach(e => e.visible = true);
-            break;
-        case 2:
-            meshArrs[keypress - 1].forEach(e => e.visible = true);
-            break;
-        case 3:
-            meshArrs[keypress - 1].forEach(e => e.visible = true);
-            break;
-        case 4:
-            meshArrs[keypress - 1].forEach(e => e.visible = true);
-            break;
-    }
-}
+var keypress = 1;
 
 /* Sets up scene */
 renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("canvas"), antialias: true });
@@ -227,12 +201,12 @@ function hideVisuals() {
  * @returns keypress
  */
 function setKeypress(e) {
-    if (isAnimating === true) {
         if (e.which >= 49 && e.which <= 52) {
             meshArrs[keypress - 1].forEach(e => e.visible = false);
         }
         switch (e.which) {
             case 49:
+                console.log("activating");
                 keypress = 1;
                 meshArrs[keypress - 1].forEach(e => e.visible = true);
                 break;
@@ -253,27 +227,6 @@ function setKeypress(e) {
                 $('#github').toggle();
                 break;
         }
-
-        /**
-         * If the user is logged in, make an AJAX call to the database to save their preferences each time a change is made
-         * 
-         */
-        if (loggedIn) {
-            let update =
-                {
-                    username: name,
-                    displayPreference: keypress,
-                    volumeLevel: volume.value
-                };
-
-            $.ajax({
-                url: "api/existingUsers",
-                type: 'PUT',
-                dataType: 'JSON',
-                data: update
-            });
-        }
-    }
 };
 
 /**

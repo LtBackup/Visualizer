@@ -28,30 +28,13 @@ function audioAnalyzer(audio) {
     gainNode.connect(context.destination);
     var musicVolume = document.getElementById("volume");
     /* set volume to 50% loudness by default to match value set in HTML */
-    if (loggedIn) {
-        gainNode.gain.setValueAtTime(volumePref / 100, context.currentTime);
-        musicVolume.value = volumePref;
-    } else {
-        gainNode.gain.setValueAtTime(0.5, context.currentTime);
-    }
+    gainNode.gain.setValueAtTime(0.5, context.currentTime);
 
     /** Sound Volume Controls */
     musicVolume.addEventListener("change", function () {
         var soundLevel = parseFloat(this.value / 100);
         //smooths out volume change, with a slight imperceptible delay - prevents pops on abrupt amplifcation changes
         gainNode.gain.setTargetAtTime(soundLevel, context.currentTime + 0.3, 0.3);
-        let updateVol = {
-            username: name,
-            displayPreference: keypress,
-            volumeLevel: volume.value
-        };
-
-        $.ajax({
-            url: "api/existingUsers",
-            type: "PUT",
-            dataType: "JSON",
-            data: updateVol
-        });
     });
 
     $("body")
